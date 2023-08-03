@@ -17,17 +17,20 @@
 # ami-0c8cc5cb6544b3370 - x86 ClearOS fast boot
 # ami-084237e82d7842286 - ARM 64-Bit Amazon Linux 2
 #
+# Note: Requires that the subnet is in the same Availability Zone (AZ) as your Commvault Backup & Recovery instance (to allow use of Commvault HotAdd restore)
+# Note2: Relies on deployment of Commvault Backup & Recovery BYOL product from AWS Marketplace, so that the AWS IAM 'CommvaultBackupAndRecovery' role is available.
+#
 variable "awsprops" {
     type = map
     default = {
     region = "us-east-1"
     az = "us-east-1a"
-    vpc = "vpc-0a0255113ad4f42c7"
+    vpc = "INSERT-YOUR-VPC-ID"
     ami = "ami-0c8cc5cb6544b3370"
     itype = "t3.micro"
-    subnet = "subnet-0873f033d1c7f120c"
+    subnet = "INSERT-SUBNET-ID-YOUR-COMMVAULT-INSTANCE-IS-IN"
     publicip = false
-    keyname = "Massively Parallel Restore Test"
+    keyname = "INSERT-YOUR-KEYPAIRNAME"
     instanceprofile = "CommvaultBackupAndRecovery"
     volume_type = "gp3"
     encrypt_disk = "true"
