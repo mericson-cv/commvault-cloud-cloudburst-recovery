@@ -16,3 +16,13 @@ At a high-level the process for using this example is:
 1. Setup a Commvault CommServe (or use and existing Commvault installation).
 2. Backup the Amazon EC2 workloads (and any of the other protected workloads in your environment) to Amazon S3 frequent access storage class.
 3. Deploy 
+
+## :balance_scale: License
+
+This e
+
+## :handshake: Contributing
+
+Although we're extremely excited to receive contributions from the community, we're still working on the best mechanism to take in examples from external sources. Please bear with us in the short-term if pull requests take longer than expected or are closed.
+Please read our [contributing guidelines](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/master/CONTRIBUTING.md)
+if you'd like to open an issue or submit a pull request.
