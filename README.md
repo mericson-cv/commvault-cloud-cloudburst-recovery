@@ -40,6 +40,10 @@ Restore time: **9 mins**
 
 ## 🛠️ Setup - Step 1 - Deploy Commvault from the AWS Marketplace
 
+This step deploys Commvault Backup & Recovery as a single Amazon EC2 instance running Microsoft Windows. 
+
+See the Commvault Backup & Recovery BYOL
+
 1. Login to [AWS Console](https://aws.amazon.com/console/) as a user that can deploy new Amazon EC2, Amazon S3. and AWS IAM resources using Amazon CloudFormation.
 2. Open new browser tab to [AWS Marketplace](https://aws.amazon.com/marketplace) and search for ```Commvault```.
 3. Click [Commvault Backup & Recovery BYOL](https://aws.amazon.com/marketplace/pp/prodview-ecysdywnipxv6?sr=0-3&ref_=beagle&applicationId=AWSMPContessa).
@@ -70,9 +74,36 @@ Restore time: **9 mins**
 
 🕙 _estimated completion time_: 3 mins
 
-### Accessing your Commvault Backup & Recovery instance
+## ㊙️ Setup - Step 2 - Deploy Commvault AWS IAM policies and role
+
+This step is completed as part of Step 1.
+
+Commvault will create a single AWS IAM Role called `CommvaultBackupAndRecovery`.
+
+Detailed information of the AWS IAM Policies required by Commvault (per AWS workload) may be viewed [here](https://documentation.commvault.com/2023e/essential/101442_requirements_and_usage_for_aws_iam_policies_and_permissions.html#iam-policies).
+
+## 🛠️ Setup - Step 3 - Perform initial one-time setup
 
 ### Creating a Commvault admin account
+1. Obtain your ```Administrator``` password for your newly created ```Commvault Backup & Recovery``` instance.
+2. Login using Remote Desktop Protocol (RDP) - Commvault recommends using [Amazon EC2 Instance Connect](https://aws.amazon.com/about-aws/whats-new/2023/06/amazon-ec2-instance-connect-ssh-rdp-public-ip-address/) for secure access to your Commvault instance _without_ the need to expose public IP addresses, or manage __bastion hosts___.
+3. Wait for the ******* Starting Commserve image customization ******** powershell bootstrapper script to complete.
+   
+(this script runs only once, at first boot to configure the Commserve name)
+(you can get a complete log of the bootstrapper activity in E:\Program Files\Commvault\ContentStore\Log Files\CS_Customization.log)
+
+💡Tip: **Be patient**, remember that each of the Amazon EBS volumes on the host is likely lazy-loading from Amazon S3, as they have just been created from Amazon EBS snapshots.
+
+A browser will open when complete advanced, proceed to localhost (unsafe)
+[https://localhost/adminconsole](https://localhost/adminconsole)
+
+4.	Provide the **Email address(( that will be associated with the Commvault ‘admin’ built-in account ([break glass account](https://docs.aws.amazon.com/whitepapers/latest/organizing-your-aws-environment/break-glass-access.html)).
+5.	Provide the **Password** that will be associated with the Commvault ‘admin’ built-in account.
+6.	Click **Create account** button
+7.	You will be greeted with Command Center login screen. Login with newly provide admin and password.
+8.	Click **OK** to accept the License and Registration warning.
+
+:warning: Warning: If you are using a trial license the ```Cloud Storage``` license will be constrained to a maximum of ten (10) concurrent MediaAgents during the restore. If you have a paid Commvault license, you can [submit a request](https://ma.commvault.com/Support/ProductRegistration) to extend your ```Cloud Storage``` license to match your required parallism (i.e., the total number of MediaAGents you will have active in your Commvault environment).
 
 ### Completing Commvault Core Setup
 1. Click Let’s get started
