@@ -68,8 +68,49 @@ Restore time: **9 mins**
 26. Select the **I acknowledge that AWS CloudFormation might create IAM resources with custom names.** checkbox.
 27. Click **Submit** button.
 
-WARNING: If you also have a role called ‘CommvaultBackupAndRecovery’ the stack will fail to deploy.
+🕙 _estimated completion time_: 3 mins
 
+### Accessing your Commvault Backup & Recovery instance
+
+### Creating a Commvault admin account
+
+### Completing Commvault Core Setup
+1. Click Let’s get started
+2. Click Cloud in the Add storage page.
+3. Provide a Cloud library Name (i.e., Amazon S3-IA (us-east-1))
+4. Select Amazon S3 as the Cloud storage Type.
+5. Leave MediaAgent with the configured (default) MediaAgent (the CommServe).
+6. Set the Service host to s3.us-east-1.amazonaws.com (your Region may differ).
+7. Select IAM role for the Credentials
+8. Enter the bucket name created in your AWS CloudFormation deployment
+
+💡 Hint: You can find the bucket name in the AWS CloudFormation Console, in your stack, on the Outputs tab, as CvltCloudLibraryBucketName
+
+9. Select the Storage class, the default S3 Standard-Infrequent Access (S3 Standard-IA) is the recommended Storage Class for Backup data.
+10. Leave Use deduplication enabled.
+11. Enter the Deduplication DB location, use the volume pre-setup, pre-formatted with correct block-size (i.e., H:\)
+
+```Example: Enter H:\Amazon S3-IA – DDB```
+
+12. Click Save on the Create server backup plan page to accept defaults for server plans.
+
+⚠️ If you also have a role called ‘CommvaultBackupAndRecovery’ the stack will fail to deploy.
+
+### (Optional) Upgrade Commvault Backup & Recovery to latest Maintenance Release
+1. Download the latest Full Install Image to the CommServe
+
+🕙 How long did it take? 15 minutes and 56 seconds.
+
+2. Execute Setup.exe as Administrator
+3. Select I Agree checkbox, click Next button
+4. Select Install packages on this computer, click Next button
+5. Select Upgrade Feature Release, click Next button
+6. Select Perform Full Database Maintenance, click Next button, click Next button (again)
+7. The machine needs to be restarted, click Reboot Now
+8. Login again
+9. Install will start automatically
+10. Select Resume install, click Next button
+   
 ## :balance_scale: License
 
 This e
