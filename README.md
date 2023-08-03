@@ -1,4 +1,4 @@
-![Commvault Backup & Recovery](https://www.commvault.com/wp-content/uploads/2020/06/vc-june-fi.png)
+![Commvault Backup & Recovery](https://media.licdn.com/dms/image/C4E0BAQHatJ6EtVFZlQ/company-logo_200_200/0/1655393666027?e=1698883200&v=beta&t=WLBL8ERyPVlKWEgjHC2qIPZlsdJejA_bP1K6z12P3m4)
 
 # Commvault Backup & Recovery - Massively Parallel Recovery Example
 
