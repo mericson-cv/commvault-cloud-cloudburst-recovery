@@ -14,7 +14,7 @@ A part of any modern data management plan includes an understanding of your busi
 
 ## :hammer_and_wrench: Setup
 
-At a high-level the process for setup and execution this solution is:
+At a high-level the process for setup and execution this solution (depicted above) is as follows:
 1. Deploy [Commvault Backup & Recovery BYOL](https://aws.amazon.com/marketplace/pp/prodview-ecysdywnipxv6?sr=0-3&ref_=beagle&applicationId=AWSMPContessa) from the [AWS Marketplace](https://aws.amazon.com/marketplace/seller-profile?id=88cecb14-a8b2-49bd-ba1f-58be76108f48) using AWS CloudFormation.
 2. Review the AWS IAM policies and role ```CommvaultBackupAndRecovery``` that was created to allow access to AWS workloads to protect.
 3. Complete the initial [Core Setup Wizard](https://documentation.commvault.com/2023e/essential/86625_quick_start_guide.html#step-3-complete-core-setup-wizard) and run a backup of your EC2 instances and/or other [supported workloads](https://www.commvault.com/supported-technologies/amazon/aws) to an Amazon S3 frequent access storage class.
