@@ -155,7 +155,11 @@ Once terminated you can remove the MediaAgents from your Commvault Backup & Reco
    
 ## :balance_scale: License
 
-This eode is offered without warranty to restriction. It may be copied, reused. 
+This code is offered and licensed under the [Apache 2.0](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/blob/main/LICENSE.md) license.
+
+## ❓Support
+
+If you need assistance with your Commvault Backup & Recovery software you can Join in at the [commuunity](https://community.commvault.com), Check the [docs](https://docs.commvault.com), or [Log a support call](https://ma.commvault.com).
 
 ## :handshake: Contributing
 
