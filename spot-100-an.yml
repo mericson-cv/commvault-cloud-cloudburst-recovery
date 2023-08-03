@@ -1,0 +1,3361 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: Example of launching an EC2 Spot Instance using EC2 Launch Templates
+Metadata:
+  Author:
+    Description: Chad Schmutzer <schmutze@amazon.com>
+  License:
+    Description: 'Copyright 2017 Amazon.com, Inc. and its affiliates. All Rights Reserved.
+
+      Licensed under the Amazon Software License (the "License"). You may not use this file
+      except in compliance with the License. A copy of the License is located at
+
+      http://aws.amazon.com/asl/
+
+      or in the "license" file accompanying this file. This file is distributed on an "AS IS"
+      BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+      License for the specific language governing permissions and limitations under the License.'
+Outputs:
+  launchTemplate:
+    Value:
+      Ref: launchTemplate
+Resources:
+  launchTemplate:
+    Properties:
+      LaunchTemplateData:
+        MetadataOptions:
+          HttpTokens: required
+        DisableApiTermination: false # do not disable the ability to terminate via API
+        EbsOptimized: "True"
+        ImageId: "ami-050d39b3c3ec32992" # Commvault Feature Release 11.30 Graviton Access Node
+        InstanceMarketOptions:
+          MarketType: spot
+        InstanceType: c6g.large
+        KeyName: "Massively Parallel Restore Test"
+        NetworkInterfaces:
+        - DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          DeleteOnTermination: "True"
+          Description: "This is the default network interface for the Access Node"
+        BlockDeviceMappings:
+          - DeviceName: /dev/xvda
+            Ebs:
+              VolumeType: gp3
+              Encrypted: 'true'
+              DeleteOnTermination: 'true'
+          - DeviceName: /dev/xvdf
+            Ebs:
+              VolumeType: gp3
+              Encrypted: 'true'
+              DeleteOnTermination: 'true'
+          - DeviceName: /dev/xvdg
+            Ebs: 
+              VolumeType: gp3
+              Encrypted: 'true'
+              DeleteOnTermination: 'true'
+        UserData:
+           Fn::Base64: !Sub |
+             #!/bin/bash
+             sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+             yum update -y
+    Type: AWS::EC2::LaunchTemplate
+  spotAccessNode1:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-1
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode2:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-2
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode3:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-3
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode4:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-4
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode5:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-5
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode6:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-6
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode7:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-7
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode8:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-8
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode9:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-9
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode10:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-10
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode11:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-11
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode12:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-12
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode13:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-13
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode14:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-14
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode15:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-15
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode16:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-16
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode17:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-17
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode18:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-18
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode19:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-19
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode20:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-20
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode21:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-21
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode22:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-22
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode23:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-23
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode24:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-24
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode25:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-25
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode26:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-26
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode27:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-27
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode28:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-28
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode29:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-29
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode30:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-30
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode31:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-31
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode32:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-32
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode33:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-33
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode34:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-34
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode35:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-35
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode36:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-36
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode37:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-37
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode38:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-38
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode39:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-39
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode40:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-40
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode41:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-41
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode42:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-42
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode43:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-43
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode44:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-44
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode45:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-45
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode46:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-46
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode47:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-47
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode48:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-48
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode49:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-49
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode50:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-50
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode51:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-51
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode52:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-52
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode53:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-53
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode54:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-54
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode55:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-55
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode56:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-56
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode57:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-57
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode58:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-58
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode59:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-59
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode60:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-60
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode61:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-61
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode62:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-62
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode63:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-63
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode64:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-64
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode65:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-65
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode66:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-66
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode67:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-67
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode68:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-68
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode69:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-69
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode70:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-70
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode71:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-71
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode72:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-72
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode73:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-73
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode74:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-74
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode75:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-75
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode76:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-76
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode77:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-77
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode78:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-78
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode79:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-79
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode80:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-80
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode81:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-81
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode82:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-82
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode83:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-83
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode84:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-84
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode85:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-85
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode86:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-86
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode87:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-87
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode88:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-88
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode89:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-89
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode90:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-90
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode91:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-91
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode92:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-92
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode93:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-93
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode94:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-94
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode95:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-95
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode96:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-96
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode97:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-97
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode98:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-98
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode99:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-99
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance
+  spotAccessNode100:
+    DependsOn:
+    - launchTemplate
+    Properties:
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      LaunchTemplate:
+        LaunchTemplateId:
+          Ref: launchTemplate
+        Version: 1
+      AdditionalInfo: "test"
+      AvailabilityZone: us-east-1a
+      Monitoring: "False"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsAAAARecord: "False"
+        EnableResourceNameDnsARecord: "False"
+        HostnameType: "ip-name"
+      PropagateTagsToVolumeOnCreation: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-07fe3ba6f46c32e1d"]
+      SourceDestCheck: "True"
+      Tags:
+        - Key: Name
+          Value: spot-access-node-graviton-100
+        - Key: "Cvlt:Usage"
+          Value: Testing
+        - Key: "Cvlt:BillingDept"
+          Value: 232242
+        - Key: "Cvlt:DataClassification"
+          Value: dev-test
+    Type: AWS::EC2::Instance

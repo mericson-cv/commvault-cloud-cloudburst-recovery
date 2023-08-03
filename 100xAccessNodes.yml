@@ -1,0 +1,2310 @@
+# AMIs 11.30 ami-050d39b3c3ec32992
+# aws ec2 describe-images --filters "Name=product-code,Values=3wq3qz4exmj40qu9cum2ctze5"
+# 11.26 ami-0b15311d5af2fe457
+# 11.25 ami-0cdaa07f0ecf8fe02
+# 11.28 ami-02b76378f983678e5
+# 11.30 ami-050d39b3c3ec32992
+AWSTemplateFormatVersion: 2010-09-09
+Description: Cloudformation template to deploy 16 ARM 64-bit Graviton Access Node and auto-dock to CommServe
+Resources:
+  AccessNode1: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-1"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode2: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-2"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode3: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-3"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode4: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-4"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode5: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-5"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode6: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-6"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode7: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-7"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode8: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-8"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode9: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-9"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode10: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-10"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode11: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-11"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode12: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-12"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode13: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-13"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode14: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-14"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode15: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-15"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode16: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-16"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode17: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-17"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode18: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-18"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode19: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-19"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode20: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-20"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode21: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-21"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode22: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-22"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode23: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-23"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode24: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-24"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode25: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-25"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode26: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-26"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode27: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-27"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode28: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-28"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode29: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-29"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode30: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-30"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode31: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-31"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode32: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-32"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode33: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-33"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode34: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-34"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode35: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-35"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode36: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-36"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode37: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-37"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode38: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-38"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode39: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-39"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode40: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-40"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode41: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-41"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode42: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-42"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode43: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-43"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode44: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-44"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode45: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-45"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode46: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-46"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode47: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-47"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode48: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-48"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode49: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-49"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode50: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-50"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode51: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-51"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode52: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-52"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode53: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-53"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode54: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-54"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode55: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-55"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode56: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-56"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode57: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-57"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode58: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-58"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode59: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-59"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode60: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-60"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode61: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-61"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode62: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-62"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode63: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-63"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode64: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-64"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode65: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-65"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode66: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-66"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode67: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-67"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode68: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-68"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode69: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-69"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode70: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-70"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode71: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-71"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode72: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-72"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode73: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-73"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode74: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-74"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode75: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-75"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode76: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-76"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode77: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-77"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode78: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-78"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode79: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-79"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode80: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-80"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode81: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-81"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode82: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-82"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode83: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-83"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode84: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-84"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode85: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-85"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode86: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-86"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode87: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-87"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode88: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-88"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode89: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-89"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode90: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-90"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode91: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-91"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode92: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-92"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode93: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-93"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode94: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-94"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode95: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-95"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode96: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-96"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode97: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-97"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode98: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-98"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode99: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-99"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+  AccessNode100: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-050d39b3c3ec32992"
+      InstanceType: c6g.large
+      IamInstanceProfile: "CommvaultBackupAndRecovery"
+      KeyName: "Massively Parallel Restore Test"
+      EbsOptimized: "True"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "false"
+          DeviceIndex: 0
+          SubnetId: subnet-052e6c9bd06cd7519
+          GroupSet: ["sg-0457c5710b6003821"]
+      Tags:
+        - Key: "Name"
+          Value: "Single-Access-Node-100"
+        - Key: "Description"
+          Value: "Commvault Cloud Access Node ARM 64-bit Graviton3"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo yum update -y
+
