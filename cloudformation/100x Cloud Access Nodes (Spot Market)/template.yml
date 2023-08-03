@@ -1,3 +1,17 @@
+# Note this template was developed and added to overtime, there has been no attempt to simplify or re-factor the template using looping or other code reductinon techniques.
+#
+# INSTRUCTIONS: 
+# - Ensure AWS Account where instances are deployed has an AWS IAM role called 'CommvaultBackupAndRecovery' (this role is created during deployment of the 'Commvault Backup & Recovery BYOL' product in AWS Marketplace).
+# - Update all occurrences of the KeyName parameter to a Key pair Name in your AWS account.
+# - Update all occurrences of the SubnetId parameter with the Subnet ID that your 'Commvault Backup & Recovery' instance resides within - this allows use of Commvault HotAdd recovery
+# - Update all occurrences of the GroupSet parameter with a Security group ID that allows incoming TCP (8400, 8403) and ICMP (PING) from the 'Commbvault Backup & Recovery' instance.
+# - Optionally update the ImageId, InstanceType
+# 
+# INSTRUCTIONS to auto-register instances with your Commvault Backup & Recovery instance
+# - Replace all occurrences of the -CSHost parameter (see UserData section) to include the IPv4 address of your 'Commvault Backup & Recovery' instance.
+# - Replace all occurrences of the -CSName parameter (see UserData section) to match the fully-qualified hostname returned by `nslookup <YOUR-CS-HOST>` (or your CommServe friendly name as shown in Commvault Command Center home screen).
+# - Obtain the authcode for your CommServe and replace all occurrences of -authcode parameter (see UserData section).
+#
 ---
 AWSTemplateFormatVersion: 2010-09-09
 Description: Example of launching an EC2 Spot Instance using EC2 Launch Templates
@@ -56,7 +70,7 @@ Resources:
         UserData:
            Fn::Base64: !Sub |
              #!/bin/bash
-             sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+             sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
              yum update -y
     Type: AWS::EC2::LaunchTemplate
   spotAccessNode1:
