@@ -14,7 +14,7 @@
 #
 ---
 AWSTemplateFormatVersion: 2010-09-09
-Description: Example of launching an EC2 Spot Instance using EC2 Launch Templates
+Description: Example of launching an EC2 Spot Instance using EC2 Launch Templates, extended to use Commvault Cloud Access Node ARM BYOL product and auto-register instances with existing Commvault Backup & Recovery instance.
 Metadata:
   Author:
     Description: Chad Schmutzer <schmutze@amazon.com>
