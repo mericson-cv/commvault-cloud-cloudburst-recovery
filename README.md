@@ -36,7 +36,7 @@ Commvault lab testing was performed using the following setup:
 - 100 x Commvault Cloud Access Nodes / Amazon EC2 instances ([C6g.large](https://aws.amazon.com/ec2/instance-types/c6g/) (2 vCPU, 4GiB) **AWS Graviton** ⭐⭐⭐
 - 100 x Amazon EC2 test instances totalling 1TiB of randomly generated data.
 
-
+![Test Result](commvault-massively-parallel-recovery-result.png)
 
 ## 🛠️ Setup - Step 1 - Deploy Commvault from the AWS Marketplace
 
