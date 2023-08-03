@@ -2,7 +2,7 @@
 
 # Commvault Backup & Recovery - Massively Parallel Recovery Example
 
-Example Infrastructure as Code (IaC) solution using Amazon CloudFormation, HashiCorp Terraform to deploy on-demand Amazon EC2 instances to perform a massively parallel recovery using Commvault Backup & Recovery.
+Example Infrastructure as Code (IaC) solution using [AWS CloudFormation](https://aws.amazon.com/cloudformation/), [HashiCorp Terraform](https://www.terraform.io/) to deploy on-demand and Spot Amazon EC2 instances to perform a massively parallel recovery using [Commvault Backup & Recovery](https://www.commvault.com/platform/products/backup-and-recovery).
 
 ## :books: Background
 
@@ -10,20 +10,24 @@ Example Infrastructure as Code (IaC) solution using Amazon CloudFormation, Hashi
 
 This example solution show-cases the elasticity of Amazon EC2, the scalability of Amazon S3, and the power of the Commvault Backup & Recovery data platform to achieve a massivelly parallel restore with on-demand ephemeral resources deployed using Infrastructure as Code.
 
-A part of any modern data management plan includes an understanding of your business _recovery time objectives_ and in extereme circumstances where multiple applications are affected, the elastic nature of AWS compute allows a rapid and **cost effective** rapid recovery solution.
+A part of any modern data management plan includes an understanding of your business _recovery time objectives_ and in extreme circumstances where multiple applications are affected, the elastic nature of AWS compute allows a rapid and **cost effective** rapid recovery solution.
 
 ![Commvault Massively Parallel Restore - Reference Architecture](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/blob/main/commvault-massively-parallel-recovery-solution.png)
 
 ## :hammer_and_wrench: Setup
 
 At a high-level the process for setup and execution this solution is:
-1. Deploy [Commvault Backup & Recovery BYOL](https://aws.amazon.com/marketplace/pp/prodview-ecysdywnipxv6?sr=0-3&ref_=beagle&applicationId=AWSMPContessa) from the [AWS Marketplace](https://aws.amazon.com/marketplace/seller-profile?id=88cecb14-a8b2-49bd-ba1f-58be76108f48) and complete the [Core Setup Wizard](https://documentation.commvault.com/2023e/essential/86625_quick_start_guide.html#step-3-complete-core-setup-wizard).
-2. Configure and perform backup of your Amazon EC2 instances and/or other [supported workloads](https://www.commvault.com/supported-technologies/amazon/aws) to an Amazon S3 frequent access storage class.
-3. Deploy 100 x [Commvault Cloud Access Node ARM BYOL](https://aws.amazon.com/marketplace/pp/prodview-usqf7gn3ipqke?sr=0-2&ref_=beagle&applicationId=AWSMPContessa) using Amazon CloudFormation and optionally upgrade them using a push install from previously installed Commvault all-in-one solution (step 1).
-4. Configure additional settings to permit massively parallel scheduling of recovery across the 100 Access Nodes.
-5. Run a massively parallel restore.
-6. Cleanup (terminate) your 100 x [Commvault Cloud Access Node ARM BYOL](https://aws.amazon.com/marketplace/pp/prodview-usqf7gn3ipqke?sr=0-2&ref_=beagle&applicationId=AWSMPContessa) instances using Amazon CloudFormation.
-7. Cleanup (delete) your 100 Commvault Cloud Access Nodes from Commvault Backup & Recovery client registry.
+1. Deploy [Commvault Backup & Recovery BYOL](https://aws.amazon.com/marketplace/pp/prodview-ecysdywnipxv6?sr=0-3&ref_=beagle&applicationId=AWSMPContessa) from the [AWS Marketplace](https://aws.amazon.com/marketplace/seller-profile?id=88cecb14-a8b2-49bd-ba1f-58be76108f48) using AWS CloudFormation.
+2.Review the AWS IAM policies and role ```CommvaultBackupAndRecovery``` that was created to allow access to AWS workloads to protect.
+3. Complete **initial setup** of Commvault Backup & REcovery (complete the [Core Setup Wizard](https://documentation.commvault.com/2023e/essential/86625_quick_start_guide.html#step-3-complete-core-setup-wizard)).
+
+:bulb: Tip: You will also want to backup of your Amazon EC2 instances and/or other [supported workloads](https://www.commvault.com/supported-technologies/amazon/aws) to an Amazon S3 frequent access storage class.
+
+5. Deploy 100 x [Commvault Cloud Access Node ARM BYOL](https://aws.amazon.com/marketplace/pp/prodview-usqf7gn3ipqke?sr=0-2&ref_=beagle&applicationId=AWSMPContessa) using Amazon CloudFormation and optionally upgrade them using a push install from previously installed Commvault all-in-one solution (step 1).
+
+:bulb: Tip: You will also configure additional settings to permit massively parallel scheduling of recovery across the 100 Access Nodes.
+
+7. Run a massively parallel restore.
 
 100 instances here are used as an example only to demonstrate the massively parallel nature of __Commvault Backup & Recovery__, Amazon S3, and Amazon EC2 compute. Commvault recommends performing regular testing and GameDays in your IT, Security, and Application teams to find the right mix of recovery speed (throughput) and recovery cost.
 
@@ -141,10 +145,17 @@ A browser will open when complete advanced, proceed to localhost (unsafe)
 8. Login again
 9. Install will start automatically
 10. Select Resume install, click Next button
+
+## Cleanup
+   
+Don't forget to cleanup (terminate) your 100 x [Commvault Cloud Access Node ARM BYOL](https://aws.amazon.com/marketplace/pp/prodview-usqf7gn3ipqke?sr=0-2&ref_=beagle&applicationId=AWSMPContessa) instances using Amazon CloudFormation.
+
+Once terminated you can remove the MediaAgents from your Commvault Backup & Recovery system using the supplied [powershell scripts](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/tree/main/powershell).
+
    
 ## :balance_scale: License
 
-This e
+This eode is offered without warranty to restriction. It may be copied, reused. 
 
 ## :handshake: Contributing
 
