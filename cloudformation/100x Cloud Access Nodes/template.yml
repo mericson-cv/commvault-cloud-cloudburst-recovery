@@ -1,9 +1,17 @@
-# AMIs 11.30 ami-050d39b3c3ec32992
-# aws ec2 describe-images --filters "Name=product-code,Values=3wq3qz4exmj40qu9cum2ctze5"
-# 11.26 ami-0b15311d5af2fe457
-# 11.25 ami-0cdaa07f0ecf8fe02
-# 11.28 ami-02b76378f983678e5
-# 11.30 ami-050d39b3c3ec32992
+# Note this template was developed and added to overtime, there has been no attempt to simplify or re-factor the template using looping or other code reductinon techniques.
+#
+# INSTRUCTIONS: 
+# - Ensure AWS Account where instances are deployed has an AWS IAM role called 'CommvaultBackupAndRecovery' (this role is created during deployment of the 'Commvault Backup & Recovery BYOL' product in AWS Marketplace).
+# - Update all occurrences of the KeyName parameter to a Key pair Name in your AWS account.
+# - Update all occurrences of the SubnetId parameter with the Subnet ID that your 'Commvault Backup & Recovery' instance resides within - this allows use of Commvault HotAdd recovery
+# - Update all occurrences of the GroupSet parameter with a Security group ID that allows incoming TCP (8400, 8403) and ICMP (PING) from the 'Commbvault Backup & Recovery' instance.
+# - Optionally update the ImageId, InstanceType
+# 
+# INSTRUCTIONS to auto-register instances with your Commvault Backup & Recovery instance
+# - Replace all occurrences of the -CSHost parameter (see UserData section) to include the IPv4 address of your 'Commvault Backup & Recovery' instance.
+# - Replace all occurrences of the -CSName parameter (see UserData section) to match the fully-qualified hostname returned by `nslookup <YOUR-CS-HOST>` (or your CommServe friendly name as shown in Commvault Command Center home screen).
+# - Obtain the authcode for your CommServe and replace all occurrences of -authcode parameter (see UserData section).
+#
 AWSTemplateFormatVersion: 2010-09-09
 Description: Cloudformation template to deploy 16 ARM 64-bit Graviton Access Node and auto-dock to CommServe
 Resources:
@@ -13,7 +21,7 @@ Resources:
       ImageId: "ami-050d39b3c3ec32992"
       InstanceType: c6g.large
       IamInstanceProfile: "CommvaultBackupAndRecovery"
-      KeyName: "Massively Parallel Restore Test"
+      KeyName: "INSERT-YOUR-KEYPAIR-NAME"
       EbsOptimized: "True"
       NetworkInterfaces:
         - AssociatePublicIpAddress: "false"
@@ -28,7 +36,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode2: 
     Type: AWS::EC2::Instance
@@ -51,7 +59,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode3: 
     Type: AWS::EC2::Instance
@@ -74,7 +82,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode4: 
     Type: AWS::EC2::Instance
@@ -97,7 +105,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode5: 
     Type: AWS::EC2::Instance
@@ -120,7 +128,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode6: 
     Type: AWS::EC2::Instance
@@ -143,7 +151,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode7: 
     Type: AWS::EC2::Instance
@@ -166,7 +174,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode8: 
     Type: AWS::EC2::Instance
@@ -189,7 +197,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode9: 
     Type: AWS::EC2::Instance
@@ -212,7 +220,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode10: 
     Type: AWS::EC2::Instance
@@ -235,7 +243,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode11: 
     Type: AWS::EC2::Instance
@@ -258,7 +266,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode12: 
     Type: AWS::EC2::Instance
@@ -281,7 +289,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode13: 
     Type: AWS::EC2::Instance
@@ -304,7 +312,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode14: 
     Type: AWS::EC2::Instance
@@ -327,7 +335,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode15: 
     Type: AWS::EC2::Instance
@@ -350,7 +358,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode16: 
     Type: AWS::EC2::Instance
@@ -373,7 +381,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode17: 
     Type: AWS::EC2::Instance
@@ -396,7 +404,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode18: 
     Type: AWS::EC2::Instance
@@ -419,7 +427,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode19: 
     Type: AWS::EC2::Instance
@@ -442,7 +450,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode20: 
     Type: AWS::EC2::Instance
@@ -465,7 +473,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode21: 
     Type: AWS::EC2::Instance
@@ -488,7 +496,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode22: 
     Type: AWS::EC2::Instance
@@ -511,7 +519,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode23: 
     Type: AWS::EC2::Instance
@@ -534,7 +542,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode24: 
     Type: AWS::EC2::Instance
@@ -557,7 +565,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode25: 
     Type: AWS::EC2::Instance
@@ -580,7 +588,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode26: 
     Type: AWS::EC2::Instance
@@ -603,7 +611,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode27: 
     Type: AWS::EC2::Instance
@@ -626,7 +634,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode28: 
     Type: AWS::EC2::Instance
@@ -649,7 +657,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode29: 
     Type: AWS::EC2::Instance
@@ -672,7 +680,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode30: 
     Type: AWS::EC2::Instance
@@ -695,7 +703,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode31: 
     Type: AWS::EC2::Instance
@@ -718,7 +726,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode32: 
     Type: AWS::EC2::Instance
@@ -741,7 +749,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode33: 
     Type: AWS::EC2::Instance
@@ -764,7 +772,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode34: 
     Type: AWS::EC2::Instance
@@ -787,7 +795,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode35: 
     Type: AWS::EC2::Instance
@@ -810,7 +818,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode36: 
     Type: AWS::EC2::Instance
@@ -833,7 +841,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode37: 
     Type: AWS::EC2::Instance
@@ -856,7 +864,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode38: 
     Type: AWS::EC2::Instance
@@ -879,7 +887,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode39: 
     Type: AWS::EC2::Instance
@@ -902,7 +910,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode40: 
     Type: AWS::EC2::Instance
@@ -925,7 +933,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode41: 
     Type: AWS::EC2::Instance
@@ -948,7 +956,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode42: 
     Type: AWS::EC2::Instance
@@ -971,7 +979,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode43: 
     Type: AWS::EC2::Instance
@@ -994,7 +1002,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode44: 
     Type: AWS::EC2::Instance
@@ -1017,7 +1025,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode45: 
     Type: AWS::EC2::Instance
@@ -1040,7 +1048,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode46: 
     Type: AWS::EC2::Instance
@@ -1063,7 +1071,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode47: 
     Type: AWS::EC2::Instance
@@ -1086,7 +1094,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode48: 
     Type: AWS::EC2::Instance
@@ -1109,7 +1117,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode49: 
     Type: AWS::EC2::Instance
@@ -1132,7 +1140,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode50: 
     Type: AWS::EC2::Instance
@@ -1155,7 +1163,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode51: 
     Type: AWS::EC2::Instance
@@ -1178,7 +1186,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode52: 
     Type: AWS::EC2::Instance
@@ -1201,7 +1209,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode53: 
     Type: AWS::EC2::Instance
@@ -1224,7 +1232,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode54: 
     Type: AWS::EC2::Instance
@@ -1247,7 +1255,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode55: 
     Type: AWS::EC2::Instance
@@ -1270,7 +1278,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode56: 
     Type: AWS::EC2::Instance
@@ -1293,7 +1301,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode57: 
     Type: AWS::EC2::Instance
@@ -1316,7 +1324,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode58: 
     Type: AWS::EC2::Instance
@@ -1339,7 +1347,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode59: 
     Type: AWS::EC2::Instance
@@ -1362,7 +1370,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode60: 
     Type: AWS::EC2::Instance
@@ -1385,7 +1393,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode61: 
     Type: AWS::EC2::Instance
@@ -1408,7 +1416,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode62: 
     Type: AWS::EC2::Instance
@@ -1431,7 +1439,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode63: 
     Type: AWS::EC2::Instance
@@ -1454,7 +1462,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode64: 
     Type: AWS::EC2::Instance
@@ -1477,7 +1485,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode65: 
     Type: AWS::EC2::Instance
@@ -1500,7 +1508,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode66: 
     Type: AWS::EC2::Instance
@@ -1523,7 +1531,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode67: 
     Type: AWS::EC2::Instance
@@ -1546,7 +1554,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode68: 
     Type: AWS::EC2::Instance
@@ -1569,7 +1577,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode69: 
     Type: AWS::EC2::Instance
@@ -1592,7 +1600,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode70: 
     Type: AWS::EC2::Instance
@@ -1615,7 +1623,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode71: 
     Type: AWS::EC2::Instance
@@ -1638,7 +1646,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode72: 
     Type: AWS::EC2::Instance
@@ -1661,7 +1669,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode73: 
     Type: AWS::EC2::Instance
@@ -1684,7 +1692,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode74: 
     Type: AWS::EC2::Instance
@@ -1707,7 +1715,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode75: 
     Type: AWS::EC2::Instance
@@ -1730,7 +1738,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode76: 
     Type: AWS::EC2::Instance
@@ -1753,7 +1761,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode77: 
     Type: AWS::EC2::Instance
@@ -1776,7 +1784,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode78: 
     Type: AWS::EC2::Instance
@@ -1799,7 +1807,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode79: 
     Type: AWS::EC2::Instance
@@ -1822,7 +1830,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode80: 
     Type: AWS::EC2::Instance
@@ -1845,7 +1853,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode81: 
     Type: AWS::EC2::Instance
@@ -1868,7 +1876,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode82: 
     Type: AWS::EC2::Instance
@@ -1891,7 +1899,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode83: 
     Type: AWS::EC2::Instance
@@ -1914,7 +1922,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode84: 
     Type: AWS::EC2::Instance
@@ -1937,7 +1945,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode85: 
     Type: AWS::EC2::Instance
@@ -1960,7 +1968,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode86: 
     Type: AWS::EC2::Instance
@@ -1983,7 +1991,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode87: 
     Type: AWS::EC2::Instance
@@ -2006,7 +2014,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode88: 
     Type: AWS::EC2::Instance
@@ -2029,7 +2037,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode89: 
     Type: AWS::EC2::Instance
@@ -2052,7 +2060,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode90: 
     Type: AWS::EC2::Instance
@@ -2075,7 +2083,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode91: 
     Type: AWS::EC2::Instance
@@ -2098,7 +2106,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode92: 
     Type: AWS::EC2::Instance
@@ -2121,7 +2129,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode93: 
     Type: AWS::EC2::Instance
@@ -2144,7 +2152,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode94: 
     Type: AWS::EC2::Instance
@@ -2167,7 +2175,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode95: 
     Type: AWS::EC2::Instance
@@ -2190,7 +2198,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode96: 
     Type: AWS::EC2::Instance
@@ -2213,7 +2221,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode97: 
     Type: AWS::EC2::Instance
@@ -2236,7 +2244,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode98: 
     Type: AWS::EC2::Instance
@@ -2259,7 +2267,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode99: 
     Type: AWS::EC2::Instance
@@ -2282,7 +2290,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
   AccessNode100: 
     Type: AWS::EC2::Instance
@@ -2305,6 +2313,6 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode A4B84FB3C -overwriteClientInfo
+          sudo /opt/commvault/Base/SIMCallWrapper -OpType 1000 -CSHost "10.0.12.0" -CSName "ip-10-0-12-0.ec2.internal" -clientname `hostname` -ClientHostname `hostname` -authcode XXXXXXXXX -overwriteClientInfo
           sudo yum update -y
 
