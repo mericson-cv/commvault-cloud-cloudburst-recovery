@@ -16,25 +16,27 @@ A part of any modern data management plan includes an understanding of your busi
 
 At a high-level the process for setup and execution this solution (depicted above) is as follows:
 1. Deploy [Commvault Backup & Recovery BYOL](https://aws.amazon.com/marketplace/pp/prodview-ecysdywnipxv6?sr=0-3&ref_=beagle&applicationId=AWSMPContessa) from the [AWS Marketplace](https://aws.amazon.com/marketplace/seller-profile?id=88cecb14-a8b2-49bd-ba1f-58be76108f48) using AWS CloudFormation.
-2. Review the ```CommvaultBackupAndRecovery``` AWS IAM role and policies that were created to allow Commavult to backup and recovery your AWS workloads.
-3. Complete the initial [Commavault Core Setup Wizard](https://documentation.commvault.com/2023e/essential/86625_quick_start_guide.html#step-3-complete-core-setup-wizard) and run a backup of your EC2 instances and/or other [supported workloads](https://www.commvault.com/supported-technologies/amazon/aws) to an Amazon S3 frequent access storage class.
-4. Deploy 100 x [Commvault Cloud Access Node ARM BYOL](https://aws.amazon.com/marketplace/pp/prodview-usqf7gn3ipqke?sr=0-2&ref_=beagle&applicationId=AWSMPContessa) using Amazon CloudFormation and enable massively parallel scheduling of recovery.
+2. Review the ```CommvaultBackupAndRecovery``` AWS IAM role and policies that allow Commavult to backup and recovery your AWS workloads.
+3. Complete the [Core Setup Wizard](https://documentation.commvault.com/2023e/essential/86625_quick_start_guide.html#step-3-complete-core-setup-wizard) and run a backup of your EC2 instances and/or other [supported workloads](https://www.commvault.com/supported-technologies/amazon/aws) to Amazon S3.
+4. Deploy 100 x [Commvault Cloud Access Node ARM BYOL](https://aws.amazon.com/marketplace/pp/prodview-usqf7gn3ipqke?sr=0-2&ref_=beagle&applicationId=AWSMPContessa) with [CloudFormation template](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/tree/main/cloudformation) and configure.
 5. Run a massively parallel restore.
 
-:bulb: Tip: There are HashiCorp Terraform examples in the [terraform folder](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/tree/main/terraform) to quickly deploy on-demand or [Amazon EC2 Spot Instances](https://aws.amazon.com/ec2/spot/), complete with random data generation on first boot.
+:bulb: Tip: There are HashiCorp Terraform examples in the [terraform folder](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/tree/main/terraform) to quickly deploy on-demand or [Amazon EC2 Spot Instances](https://aws.amazon.com/ec2/spot/), complete with _random data_ generation on first boot. 
 
-_100 instances are used only as an example to demonstrate the massively parallel nature of __Commvault Backup & Recovery__, Amazon S3, and Amazon EC2 compute. Commvault recommends performing regular testing and GameDays in your IT, Security, and Application teams to find the right mix of recovery speed (throughput) and recovery cost_.
+_100 instances are used only as an example to demonstrate the massively parallel nature of __Commvault Backup & Recovery__, Amazon S3, and Amazon EC2 compute. Commvault recommends performing regular testing and [GameDays](https://aws.amazon.com/gameday/) in your IT, Security, and Application teams to find the right mix of recovery speed (throughput) and overall recovery cost_. 
+
+The key **benefit** of this solution is that the recovery resources are __ephemeral__ and may be destroyed immediately after the restore is complete.
 
 💲Note: The [Commvault Backup & Recovery BYOL](https://aws.amazon.com/marketplace/pp/prodview-ecysdywnipxv6?sr=0-3&ref_=beagle&applicationId=AWSMPContessa) product comes with a free 30-day trial so you can try this out yourself. You will incur additional costs for the AWS services you utilize during your test. Consult the AWS pricing pages for more details.
 
 ## ⏩ Recovery results
 
 Commvault lab testing was performed using the following setup:
-- 1 x Commvault Backup & Recovery / Amazon EC2 instance (M6a.2xlage) (8 vCPU, 32GiB RAM)
-- 100 x Commvault Cloud Access Nodes / Amazon EC2 C6g.large instance (2 vCPU, 4GiB) **AWS Graviton**
+- 1 x Commvault Backup & Recovery / Amazon EC2 instance ([M6a.2xlage](https://aws.amazon.com/ec2/instance-types/m6a/)) (8 vCPU, 32GiB RAM)
+- 100 x Commvault Cloud Access Nodes / Amazon EC2 instances ([C6g.large](https://aws.amazon.com/ec2/instance-types/c6g/) (2 vCPU, 4GiB) **AWS Graviton** ⭐⭐⭐
 - 100 x Amazon EC2 test instances totalling 1TiB of randomly generated data.
 
-Restore time: **9 mins**
+
 
 ## 🛠️ Setup - Step 1 - Deploy Commvault from the AWS Marketplace
 
