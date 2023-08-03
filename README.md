@@ -1,16 +1,14 @@
-![Commvault Backup & Recovery](https://media.licdn.com/dms/image/C4E0BAQHatJ6EtVFZlQ/company-logo_200_200/0/1655393666027?e=1698883200&v=beta&t=WLBL8ERyPVlKWEgjHC2qIPZlsdJejA_bP1K6z12P3m4)
-
-# Commvault Backup & Recovery - Massively Parallel Recovery Example
+# Commvault Backup & Recovery - Massively Parallel Recovery Solution
 
 Example Infrastructure as Code (IaC) solution using [AWS CloudFormation](https://aws.amazon.com/cloudformation/), [HashiCorp Terraform](https://www.terraform.io/) to deploy on-demand and Spot Amazon EC2 instances to perform a massively parallel recovery using [Commvault Backup & Recovery](https://www.commvault.com/platform/products/backup-and-recovery).
 
 ## :books: Background
 
-[Commvault Backup & Recovery](https://www.commvault.com/aws) is the industry leading data protection and cyber-resilience solution from AWS services, SaaS, and hybrid workloads. You can use Commvault Backup & Recovery to secure, defend, and recover your business applications and data.
+[Commvault Backup & Recovery](https://www.commvault.com/aws) is the industry leading data protection and cyber-resilience solution for protecting AWS services, SaaS, and other hybrid workloads. You can use Commvault Backup & Recovery to secure, defend, and recover your business applications and data (learn more at [www.commvault.com](https://www.commvault.com).
 
 This example solution show-cases the elasticity of Amazon EC2, the scalability of Amazon S3, and the power of the Commvault Backup & Recovery data platform to achieve a massivelly parallel restore with on-demand ephemeral resources deployed using Infrastructure as Code.
 
-A part of any modern data management plan includes an understanding of your business _recovery time objectives_ and in extreme circumstances where multiple applications are affected, the elastic nature of AWS compute allows a rapid and **cost effective** rapid recovery solution.
+A part of any modern data management plan includes an understanding of your business _recovery time objectives_ and in extreme circumstances (i.e., where multiple applications are affected), the elastic nature of AWS compute allows a rapid and **cost effective** rapid recovery solution for many systems in parallel.
 
 ![Commvault Massively Parallel Restore - Reference Architecture](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/blob/main/commvault-massively-parallel-recovery-solution.png)
 
@@ -18,10 +16,8 @@ A part of any modern data management plan includes an understanding of your busi
 
 At a high-level the process for setup and execution this solution is:
 1. Deploy [Commvault Backup & Recovery BYOL](https://aws.amazon.com/marketplace/pp/prodview-ecysdywnipxv6?sr=0-3&ref_=beagle&applicationId=AWSMPContessa) from the [AWS Marketplace](https://aws.amazon.com/marketplace/seller-profile?id=88cecb14-a8b2-49bd-ba1f-58be76108f48) using AWS CloudFormation.
-2.Review the AWS IAM policies and role ```CommvaultBackupAndRecovery``` that was created to allow access to AWS workloads to protect.
-3. Complete **initial setup** of Commvault Backup & REcovery (complete the [Core Setup Wizard](https://documentation.commvault.com/2023e/essential/86625_quick_start_guide.html#step-3-complete-core-setup-wizard)).
-
-:bulb: Tip: You will also want to backup of your Amazon EC2 instances and/or other [supported workloads](https://www.commvault.com/supported-technologies/amazon/aws) to an Amazon S3 frequent access storage class.
+2. Review the AWS IAM policies and role ```CommvaultBackupAndRecovery``` that was created to allow access to AWS workloads to protect.
+3. Complete the initial [Core Setup Wizard](https://documentation.commvault.com/2023e/essential/86625_quick_start_guide.html#step-3-complete-core-setup-wizard)) and run a backup of your EC2 instances and/or other [supported workloads](https://www.commvault.com/supported-technologies/amazon/aws) to an Amazon S3 frequent access storage class.
 
 5. Deploy 100 x [Commvault Cloud Access Node ARM BYOL](https://aws.amazon.com/marketplace/pp/prodview-usqf7gn3ipqke?sr=0-2&ref_=beagle&applicationId=AWSMPContessa) using Amazon CloudFormation and optionally upgrade them using a push install from previously installed Commvault all-in-one solution (step 1).
 
