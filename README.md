@@ -77,7 +77,7 @@ Detailed information of the AWS IAM Policies required by Commvault (per AWS work
 > [!WARNING]
 > If you are using a trial license the ```Cloud Storage``` license will be constrained to a maximum of ten (10) concurrent MediaAgents during the restore. If you have a paid Commvault license, you can [submit a request](https://ma.commvault.com/Support/ProductRegistration) to extend your ```Cloud Storage``` license to match your required parallism (i.e., the total number of Access Nodes you will have active in your Commvault environment).  
 <br>
-<br>
+
 
 ### Completing Commvault Core Setup
 Next, you just need to tell Commvault how often you want to run backups, and where to store your backups (i.e., Amazon S3).
@@ -98,9 +98,11 @@ Next, you just need to tell Commvault how often you want to run backups, and whe
 11. Click **Save** to accept defaults for your server plan.
 
 Consider [upgrading your Commvault software](https://documentation.commvault.com/2023e/essential/120686_downloading_software_on_demand.html) to the latest Maintenance Release before moving to the next step.
+<br>
 
 ### Deploying some test Amazon EC2 instances
 If you are simply testing this solution, navigate to the [terraform](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/blob/main/terraform/100-amazon-ec2-instances%20(10GB%20random%20data)/main.tf) file where you can find an example to deploy one hundred (100) on-demand Amazon EC2 test hosts.
+<br>
 
 ### Run an initial backup
 You will need an initial backup of your protected workloads before you can run a massively parallel restore. Assuming you used the terraform example above, perform the following to configure and run a backup.
