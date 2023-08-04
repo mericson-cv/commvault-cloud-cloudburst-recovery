@@ -91,7 +91,9 @@ If you are simply testing this solution, navigate to the [terraform](https://git
 
 ### Run an initial backup
 You will need an initial backup of your protected workloads before you can run a massively parallel restore. Assuming you uses the terraform example above, perform the following to configure and run a backup.
-1. Type **```/add hypervisor```
+1. [Add your AWS account](https://documentation.commvault.com/2023e/essential/121660_configuring_backups_for_amazon_ec2_instances.html#add-hypervisor) to Commvault Backup & Recovery.
+2. Create an [Amazon EC2 group](https://documentation.commvault.com/2023e/essential/121660_configuring_backups_for_amazon_ec2_instances.html#add-vm-group) to auto-discover EC2 instances and protect them.
+3. Run a **[backup](https://documentation.commvault.com/2023e/essential/121676_backing_up_amazon_ec2_instances_on_demand.html)**
 
 ## 🛠️ Setup - Step 4 - Deploy 100 x Cloud Access Nodes and configure
 OK, it's time to setup your set of parallel **Cloud Access Nodes**, Commvault uses Cloud Access Nodes to perform backup, replication, restores. Commvault recommends [AWS Graviton](https://aws.amazon.com/ec2/graviton/) based Access Nodes for best price-performance and so you can meet your [Shared Sustainabiltiy Responsibility](https://docs.aws.amazon.com/wellarchitected/latest/sustainability-pillar/the-shared-responsibility-model.html) in AWS. 
@@ -118,6 +120,16 @@ You can acclerate recovery time by increasing the number of Access Nodes used, a
 #
 ```
 4. Create and launch a new AWS CloudFormation Stack with your customized ```template.yml``` using either the [console](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-using-console.html) or the [AWS CLI](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-using-cli.html).
+5. Navigate to **Manage > Server groups** and click **Add server group**
+6. Provide a freeform text **Name** for your group. This group will contain all of the Access Nodes you just deployed using CloudFormation.
+7. Select **automatic association** and add a rule with the following settings, then click **Save**
+```
+Client Scope - Clients in this CommCell
+Rule: Package Installed == Virtual Server
+Rule: OS Version contains 'Amazon Linux'
+Rule: Power State == ON
+```
+9. sdvsdv
 
 ## 🏃Run - Step 5 - Run a restore
 
