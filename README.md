@@ -137,11 +137,14 @@ Rule: Power State == ON
 ```
 9. Navigate to your previously configured [Amazon EC2 group](https://documentation.commvault.com/2023e/essential/159097_updating_amazon_ec2_vm_group.html) and add your **group** for the access nodes.
 10. Add a new [entity setting](https://documentation.commvault.com/2023e/essential/132683_adding_setting_for_servers_and_server_groups.html) called ```nStartAgentThreads``` with the values specified below, and click **Save**.
-   - **Name:** ``nStartAgentThreads```
-   - **Entity:** Select your previously created server group (step 5 above).
-   - **Category:** ```VirtualServer```
-   - **Type:** ```Integer```
-   - **Value:** ``100```
+
+| Setting | Value |
+| ------- | ----- |
+| **Name:** | ``nStartAgentThreads``` |
+| **Entity:** | Select your previously created server group |
+| **Category:** | ```VirtualServer``` |
+| **Type:** | ```Integer``` |
+| **Value:** | ``100``` |
 12. Add a new entity-based additional setting called ```MaxRestoreStreams``` and set to ``100``.
 13. Open **Commvault CommCell Console** and noativate to the Cloud library where your backups are stored, expand the libarry right-click **Mount-Path**.
 14. Select **Share Mount Path**
