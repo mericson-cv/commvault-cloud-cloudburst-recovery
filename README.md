@@ -29,60 +29,24 @@ The key **benefit** of this solution is that the recovery resources are __epheme
 
 💲Note: The [Commvault Backup & Recovery BYOL](https://aws.amazon.com/marketplace/pp/prodview-ecysdywnipxv6?sr=0-3&ref_=beagle&applicationId=AWSMPContessa) product comes with a free 30-day trial so you can try this out yourself. You will incur additional costs for the AWS services you utilize during your test. Consult the AWS pricing pages for more details.
 
-## ⏩ Recovery results
+## 🛠️ Setup - Step 1 - Deploy Commvault Backup & Recovery from the AWS Marketplace
 
-Commvault lab testing was performed using the following setup:
-- 1 x Commvault Backup & Recovery / Amazon EC2 instance ([M6a.2xlage](https://aws.amazon.com/ec2/instance-types/m6a/)) (8 vCPU, 32GiB RAM)
-- 100 x Commvault Cloud Access Nodes / Amazon EC2 instances ([C6g.large](https://aws.amazon.com/ec2/instance-types/c6g/) (2 vCPU, 4GiB) **AWS Graviton** ⭐⭐⭐
-- 100 x Amazon EC2 test instances totalling 1TiB of randomly generated data.
-
-![Test Result](commvault-massively-parallel-recovery-result.png)
-
-## 🛠️ Setup - Step 1 - Deploy Commvault from the AWS Marketplace
-
-This step deploys Commvault Backup & Recovery as a single Amazon EC2 instance running Microsoft Windows. 
-
-See the Commvault Backup & Recovery BYOL
+This step deploys Commvault Backup & Recovery as a single Amazon EC2 instance running Microsoft Windows. If you already have a Commvault Backup & Recovery deployment, you may skip this step.
 
 1. Login to [AWS Console](https://aws.amazon.com/console/) as a user that can deploy new Amazon EC2, Amazon S3. and AWS IAM resources using Amazon CloudFormation.
 2. Open new browser tab to [AWS Marketplace](https://aws.amazon.com/marketplace) and search for ```Commvault```.
 3. Click [Commvault Backup & Recovery BYOL](https://aws.amazon.com/marketplace/pp/prodview-ecysdywnipxv6?sr=0-3&ref_=beagle&applicationId=AWSMPContessa).
-4. Click **Continue to Subscribe** button (top-right).
-5. Click **Continue to Configuration** button (top-right).
-6. Select **CloudFormation Template** Fulfilment Option.
-7. Select **Commvault Backup & Recovery: BYOL Deployment CloudFormation template** (default).
-8. Select latest Software version (I.E., Platform Release 2023e).
-9. Select your **Region**.
-10. Click **Continue to Launch** button.
-11. Select **Launch CloudFormation** action.
-12. Click **Launch** button.
-13. Click **Next** on Step 1 – Create Stack.
-14. Enter a **Stack Name**.
-15. Leave EC2 Instance Type as **m6a.2xlarge** (Commvault recommended default).
-16. Select a **Key Pair**.
-17. Enter an **Administrator email** for Amazon CloudWatch alarms/alerts.
-18. Select an existing **Amazon VPC** ID.
-19. Select a **Public Subnet** ID (if accessing via the Internet), or a subnet you can access via AWS Direct Connect or pre-setup bastion host (Consisider using Amazon EC2 Instance Connect for secure access without a need for public IP).
-20. Select **true** if you want a permanent (static) Elastic IP for the all-in-one CommServe (optional).
-21. Provide the IP Address or Subnet of your **Authorized Admin Subnet administrative hosts** allowed to login (Remote Desktop Protocol) into the Microsoft Windows-based Commvault Backup & Recovery instance.
-22. Select all Protected Subnets that will be able to speak securely with the CommServe via encrypted AES-256 sessions over port 8400-8403.
-23. Select true if you would like to deploy a S3 VPC Endpoint (Gateway) set to false if you already have one.
-24. Click **Next** button.
-25. Click **Next** button.
-26. Select the **I acknowledge that AWS CloudFormation might create IAM resources with custom names.** checkbox.
-27. Click **Submit** button.
+4. Select **CloudFormation Template** Fulfilment Option.
+5. Select the **I acknowledge that AWS CloudFormation might create IAM resources with custom names.** checkbox.
+6. 6. Click **Submit** to deploy.
 
-🕙 _estimated completion time_: 3 mins
-
-## ㊙️ Setup - Step 2 - Deploy Commvault AWS IAM policies and role
-
-This step is completed as part of Step 1.
+## ㊙🛠️ Setup - Step 2 - Review the created AWS IAM role and policies that allow Commavult to backup and recovery your AWS workloads.
 
 Commvault will create a single AWS IAM Role called `CommvaultBackupAndRecovery`.
 
 Detailed information of the AWS IAM Policies required by Commvault (per AWS workload) may be viewed [here](https://documentation.commvault.com/2023e/essential/101442_requirements_and_usage_for_aws_iam_policies_and_permissions.html#iam-policies).
 
-## 🛠️ Setup - Step 3 - Perform initial one-time setup
+## 🛠️ Setup - Step 3 - Complete the Core Setup Wizard and run a backup.
 
 ### Creating a Commvault admin account
 1. Obtain your ```Administrator``` password for your newly created ```Commvault Backup & Recovery``` instance.
@@ -129,9 +93,6 @@ A browser will open when complete advanced, proceed to localhost (unsafe)
 
 ### (Optional) Upgrade Commvault Backup & Recovery to latest Maintenance Release
 1. Download the latest Full Install Image to the CommServe
-
-🕙 How long did it take? 15 minutes and 56 seconds.
-
 2. Execute Setup.exe as Administrator
 3. Select I Agree checkbox, click Next button
 4. Select Install packages on this computer, click Next button
@@ -141,6 +102,15 @@ A browser will open when complete advanced, proceed to localhost (unsafe)
 8. Login again
 9. Install will start automatically
 10. Select Resume install, click Next button
+
+## ⏩ Recovery results
+
+Commvault lab testing was performed using the following setup:
+- 1 x Commvault Backup & Recovery / Amazon EC2 instance ([M6a.2xlage](https://aws.amazon.com/ec2/instance-types/m6a/)) (8 vCPU, 32GiB RAM)
+- 100 x Commvault Cloud Access Nodes / Amazon EC2 instances ([C6g.large](https://aws.amazon.com/ec2/instance-types/c6g/) (2 vCPU, 4GiB) **AWS Graviton** ⭐⭐⭐
+- 100 x Amazon EC2 test instances totalling 1TiB of randomly generated data.
+
+![Test Result](commvault-massively-parallel-recovery-result.png)
 
 ## Cleanup
    
