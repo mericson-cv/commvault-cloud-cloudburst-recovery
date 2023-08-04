@@ -78,6 +78,7 @@ Detailed information of the AWS IAM Policies required by Commvault (per AWS work
 > If you are using a trial license the ```Cloud Storage``` license will be constrained to a maximum of ten (10) concurrent MediaAgents during the restore. If you have a paid Commvault license, you can [submit a request](https://ma.commvault.com/Support/ProductRegistration) to extend your ```Cloud Storage``` license to match your required parallism (i.e., the total number of Access Nodes you will have active in your Commvault environment).  
 <br>
 <br>
+
 ### Completing Commvault Core Setup
 Next, you just need to tell Commvault how often you want to run backups, and where to store your backups (i.e., Amazon S3).
 
