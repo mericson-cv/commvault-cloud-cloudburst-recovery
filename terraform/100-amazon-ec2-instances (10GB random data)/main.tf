@@ -4,18 +4,14 @@
 # Date: 2022-03-05
 #
 # Instructions
-# Set AWSPROPS variales to match you VPC, Subnet, Instance Profile.data "" "name" {
+# Set AWSPROPS variales to match you VPC ID, Subnet ID, AWS IAM Instance Profile, and AWS Key Pair Name
+# Ensure you have installed HashiCopy Terraform and the terraform binary is in your PATH
 # Run:
+# terraform init
 # terraform plan
 # terraform apply -auto-approve
 # when done:
 # terraform destroy -auto-approve
-#
-# Note: Instances are not Spot instance as Commvault cannot restore Spot instances
-# and in-place restore testing was being performed with these instances.data "" "name" {
-# AMIs
-# ami-0c8cc5cb6544b3370 - x86 ClearOS fast boot
-# ami-084237e82d7842286 - ARM 64-Bit Amazon Linux 2
 #
 # Note: Relies on Commvault Backup & Recovery BYOL AMI product being deployed in the account so that the 'CommvaultBackupAndRecovery AWS IAM Role' exists
 #
