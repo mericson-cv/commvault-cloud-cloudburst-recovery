@@ -1,9 +1,9 @@
 # Filename: list-MediaAgents.ps1
 # Purpose: List all the registered MediaAgents on the cuonfigured Commvault Backup & Recovery installation.
 # Instructions:
-#   1. Update the WebConsoleHostName with the fully-qualified hostname of your Commvault Backup & Recovery WebConsole host
+#   1. (Optional) Replace 'localhost' in $Url variable with the fully-qualified hostname of your Commvault Backup & Recovery WebConsole host.
 #   2. Generate a Commvault AUTHCODE and enter into the API_token field
-#   3. Execure with PowerShell
+#   3. Execute with PowerShell on the WebConsole host or a remote host with access to $Url
 
 #
 # GLOBAL variables - UPDATE THESE TO MATCH YOUR ENVIRONMENT
