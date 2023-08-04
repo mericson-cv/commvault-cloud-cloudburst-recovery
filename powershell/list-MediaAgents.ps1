@@ -1,6 +1,5 @@
 # Filename: list-MediaAgents.ps1
-# Author: Mathew Ericson mericson@commvault.com
-# Purpose: List all the registered MediaAgents on the current CommServe.
+# Purpose: List all the registered MediaAgents on the cuonfigured Commvault Backup & Recovery installation.
 # Instructions:
 #   1. Update the WebConsoleHostName with the fully-qualified hostname of your Commvault Backup & Recovery WebConsole host
 #   2. Generate a Commvault AUTHCODE and enter into the API_token field
@@ -12,11 +11,14 @@
 $WebConsoleHostName='localhost'
 $authToken='INSERT_YOUR_COMMVAULT_REST_API_AUTH_TOKEN_HERE'
 #
-#
+# DEBUG variables
 #
 $debug=0;
 $timeoutInMinutes=1
 
+#
+# Main
+#
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Accept", "application/json")
 $headers.Add("Content-Type", "application/json")
