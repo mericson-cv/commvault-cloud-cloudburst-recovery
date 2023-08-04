@@ -38,9 +38,9 @@ This step deploys Commvault Backup & Recovery as a single Amazon EC2 instance ru
 3. Click [Commvault Backup & Recovery BYOL](https://aws.amazon.com/marketplace/pp/prodview-ecysdywnipxv6?sr=0-3&ref_=beagle&applicationId=AWSMPContessa).
 4. Select **CloudFormation Template** Fulfilment Option.
 5. Select the **I acknowledge that AWS CloudFormation might create IAM resources with custom names.** checkbox.
-6. 6. Click **Submit** to deploy.
+6. Click **Submit** to deploy.
 
-## ㊙🛠️ Setup - Step 2 - Review the created AWS IAM role and policies that allow Commavult to backup and recovery your AWS workloads.
+## 🛠️ Setup - Step 2 - Review the created AWS IAM role and policies that allow Commavult to backup and recovery your AWS workloads.
 
 Commvault will create a single AWS IAM Role called `CommvaultBackupAndRecovery`.
 
