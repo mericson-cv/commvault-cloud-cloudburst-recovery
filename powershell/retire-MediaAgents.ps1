@@ -14,7 +14,9 @@ $webConsoleHost="localhost"
 
 if($args.Count -eq 0) {
     echo "Syntax: retire-MediaAgents.ps1 <MediaAgent-ClientID> <MediaAgent-ClientID> <MediaAgent-ClientID>"
-    echo "Please supply at least one MediaAgent client ID to retire and delete".
+    echo "Please supply at least one MediaAgent client ID to retire and delete."
+    echo ""
+    echo ""
     exit 1
 }
 
@@ -28,8 +30,7 @@ foreach ($argument in $args) {
 	$headers.Add("Accept", "application/json")
 	$headers.Add("Authtoken", "$authToken")
 
-	Invoke-RestMethod -Method 'DELETE' -Uri http://($webConsoleHost)/webconsole/api/Client/$($argument)/Retire -Headers $headers | ConvertTo-Json
+	Invoke-RestMethod http://$($webConsoleHost)/webconsole/api/Client/$($argument)/Retire -Method 'DELETE'-Headers $headers | ConvertTo-Json
 }
 
 exit 0
-	
