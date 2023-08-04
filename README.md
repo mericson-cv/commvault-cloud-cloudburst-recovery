@@ -86,6 +86,20 @@ Next, you just need to tell Commvault how often you want to run backups, and whe
 
 Consider [upgrading your Commvault software](https://documentation.commvault.com/2023e/essential/120686_downloading_software_on_demand.html) to the latest Maintenance Release before moving to the next step.
 
+### Deploying some test Amazon EC2 instances
+If you are simply testing this solution, navigate to the [terraform](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/blob/main/terraform/100-amazon-ec2-instances%20(10GB%20random%20data)/main.tf) file where you can find an example to deploy one hundred (100) on-demand Amazon EC2 test hosts.
+
+### Run an initial backup
+You will need an initial backup of your protected workloads before you can run a massively parallel restore. Assuming you uses the terraform example above, perform the following to configure and run a backup.
+1. Type **```/add hypervisor```
+
+## 🛠️ Setup - Step 4 - Deploy 100 x Cloud Access Nodes and configure.
+
+
+## 🏃Run - Step 5 - Run a restore
+
+Simply run a restore from **Commvault Commvault Center** 
+
 ## ⏩ Recovery results
 
 Commvault lab testing was performed using the following setup:
