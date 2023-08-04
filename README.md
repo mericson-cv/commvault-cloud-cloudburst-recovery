@@ -32,51 +32,47 @@ The key **benefit** of this solution is that the recovery resources are __epheme
 💲Note: The [Commvault Backup & Recovery BYOL](https://aws.amazon.com/marketplace/pp/prodview-ecysdywnipxv6?sr=0-3&ref_=beagle&applicationId=AWSMPContessa) product comes with a free 30-day trial so you can try this out yourself. You will incur additional costs for the AWS services you utilize during your test. Consult the AWS pricing pages for more details.
 
 <details>
+  
 <summary>🛠️ Setup - Step 1 - Deploy Commvault Backup & Recovery from the AWS Marketplace</summary>
 
-<br>
-This step deploys Commvault Backup & Recovery as a single Amazon EC2 instance running Microsoft Windows. If you already have a Commvault Backup & Recovery deployment, you may skip this step.
-
-1. Login to [AWS Console](https://aws.amazon.com/console/) as a user that can deploy new Amazon EC2, Amazon S3. and AWS IAM resources using Amazon CloudFormation.
-2. Open new browser tab to [AWS Marketplace](https://aws.amazon.com/marketplace) and search for ```Commvault```.
-3. Click [Commvault Backup & Recovery BYOL](https://aws.amazon.com/marketplace/pp/prodview-ecysdywnipxv6?sr=0-3&ref_=beagle&applicationId=AWSMPContessa).
-4. Select **CloudFormation Template** Fulfilment Option and supply requested information.
-6. Select the **I acknowledge that AWS CloudFormation might create IAM resources with custom names.** checkbox.
-7. Click **Submit** to deploy.
+This step deploys Commvault Backup & Recovery as a single Amazon EC2 instance running Microsoft Windows. If you already have a Commvault Backup & Recovery deployment, you may skip this step.  
+  1. Login to [AWS Console](https://aws.amazon.com/console/) as a user that can deploy new Amazon EC2, Amazon S3. and AWS IAM resources using Amazon CloudFormation.
+  2. Open new browser tab to [AWS Marketplace](https://aws.amazon.com/marketplace) and search for ```Commvault```.
+  3. Click [Commvault Backup & Recovery BYOL](https://aws.amazon.com/marketplace/pp/prodview-ecysdywnipxv6?sr=0-3&ref_=beagle&applicationId=AWSMPContessa).
+  4. Select **CloudFormation Template** Fulfilment Option and supply requested information.
+  5. Select the **I acknowledge that AWS CloudFormation might create IAM resources with custom names.** checkbox.
+  6. Click **Submit** to deploy.
   
 </details>
 
 <details>
+  
 <summary>🛠️ Setup - Step 2 - Review the created AWS IAM role and policies that allow Commavult to backup and recovery your AWS workloads.</summary>
-<br>
-Commvault will create a single AWS IAM Role called `CommvaultBackupAndRecovery`.
+  
+Commvault will create a single AWS IAM Role called `CommvaultBackupAndRecovery`.  
 
 Detailed information of the AWS IAM Policies required by Commvault (per AWS workload) may be viewed [here](https://documentation.commvault.com/2023e/essential/101442_requirements_and_usage_for_aws_iam_policies_and_permissions.html#iam-policies).
+<br>
 <br>
 </details>
 
 <details>
+  
 <summary>🛠️ Setup - Step 3 - Complete the Core Setup Wizard and run a backup.</summary>
-
-<br>
+  
 ### Creating a Commvault admin account
 1. Obtain your ```Administrator``` password for your newly created ```Commvault Backup & Recovery``` instance.
 2. Login using Remote Desktop Protocol (RDP)
-3. Wait for the ```******* Starting Commserve image customization ********``` powershell first-boot configuration script to complete. 
+3. Wait for the ```******* Starting Commserve image customization ********``` powershell first-boot configuration script to complete.
+4. A browser will open to complete the remaining setup.
+5. Provide the **Email address** that will be associated with the Commvault ```admin``` user ([break glass account](https://docs.aws.amazon.com/whitepapers/latest/organizing-your-aws-environment/break-glass-access.html)).
+6. Provide the **Password** that will be associated with the Commvault ```admin``` user.
+7. Click **Create account**.
+8. You will be greeted with Command Center login screen. Login with newly created ```admin``` user and password.
+9. Click **OK** to accept the License and Registration warning.
 
 > [!NOTE]
 > Commvault recommends using [Amazon EC2 Instance Connect](https://aws.amazon.com/about-aws/whats-new/2023/06/amazon-ec2-instance-connect-ssh-rdp-public-ip-address/) for secure access to your Commvault instance _without_ the need to expose public IP addresses, or manage __bastion hosts__.
-
-> [!IMPORTANT]
-> *Be patient*, remember that each of the Amazon EBS volumes on the host is being provisioned from Amazon EBS snapshots that are stored in Amazon S3.
-
-A browser will open to complete the remaining setup.
-
-4.	Provide the **Email address** that will be associated with the Commvault ```admin``` user ([break glass account](https://docs.aws.amazon.com/whitepapers/latest/organizing-your-aws-environment/break-glass-access.html)).
-5.	Provide the **Password** that will be associated with the Commvault ```admin``` user.
-6.	Click **Create account**.
-7.	You will be greeted with Command Center login screen. Login with newly created ```admin``` user and password.
-8.	Click **OK** to accept the License and Registration warning.
 
 > [!WARNING]
 > If you are using a trial license the ```Cloud Storage``` license will be constrained to a maximum of ten (10) concurrent MediaAgents during the restore. If you have a paid Commvault license, you can [submit a request](https://ma.commvault.com/Support/ProductRegistration) to extend your ```Cloud Storage``` license to match your required parallism (i.e., the total number of Access Nodes you will have active in your Commvault environment).
