@@ -36,15 +36,14 @@ The key **benefit** of this solution is that the recovery resources are __epheme
 
 <br>
 This step deploys Commvault Backup & Recovery as a single Amazon EC2 instance running Microsoft Windows. If you already have a Commvault Backup & Recovery deployment, you may skip this step.
-<br>
-<br>
+
 1. Login to [AWS Console](https://aws.amazon.com/console/) as a user that can deploy new Amazon EC2, Amazon S3. and AWS IAM resources using Amazon CloudFormation.
 2. Open new browser tab to [AWS Marketplace](https://aws.amazon.com/marketplace) and search for ```Commvault```.
 3. Click [Commvault Backup & Recovery BYOL](https://aws.amazon.com/marketplace/pp/prodview-ecysdywnipxv6?sr=0-3&ref_=beagle&applicationId=AWSMPContessa).
 4. Select **CloudFormation Template** Fulfilment Option and supply requested information.
 6. Select the **I acknowledge that AWS CloudFormation might create IAM resources with custom names.** checkbox.
 7. Click **Submit** to deploy.
-<br>
+  
 </details>
 
 <details>
