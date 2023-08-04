@@ -90,7 +90,7 @@ Consider [upgrading your Commvault software](https://documentation.commvault.com
 If you are simply testing this solution, navigate to the [terraform](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/blob/main/terraform/100-amazon-ec2-instances%20(10GB%20random%20data)/main.tf) file where you can find an example to deploy one hundred (100) on-demand Amazon EC2 test hosts.
 
 ### Run an initial backup
-You will need an initial backup of your protected workloads before you can run a massively parallel restore. Assuming you uses the terraform example above, perform the following to configure and run a backup.
+You will need an initial backup of your protected workloads before you can run a massively parallel restore. Assuming you used the terraform example above, perform the following to configure and run a backup.
 1. [Add your AWS account](https://documentation.commvault.com/2023e/essential/121660_configuring_backups_for_amazon_ec2_instances.html#add-hypervisor) to Commvault Backup & Recovery.
 2. Create an [Amazon EC2 group](https://documentation.commvault.com/2023e/essential/121660_configuring_backups_for_amazon_ec2_instances.html#add-vm-group) to auto-discover EC2 instances and protect them.
 3. Run a **[backup](https://documentation.commvault.com/2023e/essential/121676_backing_up_amazon_ec2_instances_on_demand.html)**
@@ -129,7 +129,13 @@ Rule: Package Installed == Virtual Server
 Rule: OS Version contains 'Amazon Linux'
 Rule: Power State == ON
 ```
-9. sdvsdv
+9. Navigate to your previously configured [Amazon EC2 group](https://documentation.commvault.com/2023e/essential/159097_updating_amazon_ec2_vm_group.html) and add your **group** for the access nodes
+10. Add a new entity-based additional setting called ```nStartAgentThreads``` and set to ```100```.
+11. Add a new entity-based additional setting called ```MaxRestoreStreams``` and set to ``100``.
+12. Open **Commvault CommCell Console** and noativate to the Cloud library where your backups are stored, expand the libarry right-click **Mount-Path**.
+13. Select **Share Mount Path**
+14. Click the **Share** button and add each new Access Node with an _Access Mode_ of ```Read```
+15. Click **Save**
 
 ## 🏃Run - Step 5 - Run a restore
 
