@@ -8,7 +8,7 @@
 #
 # GLOBAL variables - UPDATE THESE TO MATCH YOUR ENVIRONMENT
 #
-$WebConsoleHostName='localhost'
+$Url="https://localhost/webconsole/api/mediaAgent"
 $authToken='INSERT_YOUR_COMMVAULT_REST_API_AUTH_TOKEN_HERE'
 #
 # DEBUG variables
@@ -33,5 +33,5 @@ $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Accept", "application/json")
 $headers.Add("Authtoken", "$authToken")
 
-$response = Invoke-RestMethod 'http://localhost/webconsole/api/mediaAgent' -Method 'GET' -Headers $headers | ConvertTo-Json
+$response = Invoke-RestMethod -Method 'GET' -Uri $url -Headers $headers | ConvertTo-Json
 echo $response
