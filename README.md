@@ -137,6 +137,8 @@ Rule: Power State == ON
 14. Click the **Share** button and add each new Access Node with an _Access Mode_ of ```Read```
 15. Click **Save**
 
+:bulb: **Tip**: You can use Amazon EC2 Spot Instances for your Cloud Access Nodes, but if the instance is reclaimed during the recovery, the restore will fail for any instance(s) being restored by the reclaimed instance. See the Cloudformation [```template.yml```](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/blob/main/cloudformation/100x%20Cloud%20Access%20Nodes%20(Spot%20Market)/template.yml) to deploy your Access Nodes from the Spot Market.
+
 ## 🏃Run - Step 5 - Run a restore
 
 Simply run a restore from **Commvault Commvault Center** 
