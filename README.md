@@ -93,8 +93,12 @@ If you are simply testing this solution, navigate to the [terraform](https://git
 You will need an initial backup of your protected workloads before you can run a massively parallel restore. Assuming you uses the terraform example above, perform the following to configure and run a backup.
 1. Type **```/add hypervisor```
 
-## 🛠️ Setup - Step 4 - Deploy 100 x Cloud Access Nodes and configure.
+## 🛠️ Setup - Step 4 - Deploy 100 x Cloud Access Nodes and configure
+OK, it's time to setup your set of parallel **Cloud Access Nodes**, Commvault uses the Cloud Access Node to perform backup, replication, restores. You can acclerate recovery time by increasing the number of Access Nodes used, allowing more parallel recovery activities to run at the same time. Not only does this increase business agility, it also saves cost as you are only paying for what you use (_during the restore_).
 
+1. Navigate to **Manage > CommCell** and enable **Requires authcode for installation** toggle.
+2. Click the **authcode** and save it somewhere safe, you will need it next.
+3. Download the 100 x Amazon EC2 Cloud Access Nodes ```[template.yml](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/tree/main/cloudformation/100x%20Cloud%20Access%20Nodes)``` and update to match your environment.
 
 ## 🏃Run - Step 5 - Run a restore
 
