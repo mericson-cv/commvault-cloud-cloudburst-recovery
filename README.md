@@ -97,8 +97,7 @@ Next, you just need to tell Commvault how often you want to run backups, and whe
 9. Leave **Storage class**, as the default S3 Standard-Infrequent Access (S3 Standard-IA).
 10. Enter the **Deduplication DB location**, use the volume pre-setup, pre-formatted with correct block-size (i.e., ```H:\Amqzon-S3-IA-DDB```)
 11. Click **Save** to accept defaults for your server plan.
-
-Consider [upgrading your Commvault software](https://documentation.commvault.com/2023e/essential/120686_downloading_software_on_demand.html) to the latest Maintenance Release before moving to the next step.
+12. You must be running the most current **Platform Release 2023e** Maintenance Release. [Upgrading your Commvault software](https://documentation.commvault.com/2023e/essential/120686_downloading_software_on_demand.html) to the latest Maintenance Release before moving to the next step.
 <br>
 
 ### Deploying some test Amazon EC2 instances
@@ -151,8 +150,9 @@ Rule: Package Installed == Virtual Server
 Rule: OS Version contains 'Amazon Linux'
 Rule: Power State == ON
 ```
-9. Navigate to your previously configured [Amazon EC2 group](https://documentation.commvault.com/2023e/essential/159097_updating_amazon_ec2_vm_group.html) and add your **group** for the access nodes.
-10. Add a new [entity setting](https://documentation.commvault.com/2023e/essential/132683_adding_setting_for_servers_and_server_groups.html) called ```nStartAgentThreads``` with the values specified below, and click **Save**.
+9.Select the **Server group** and select **Actions > Upgrade software** to upgrade the Access Nodes to the latest software release.
+10. Navigate to your previously configured [Amazon EC2 group](https://documentation.commvault.com/2023e/essential/159097_updating_amazon_ec2_vm_group.html) and add your **group** for the access nodes.
+11. Add a new [entity setting](https://documentation.commvault.com/2023e/essential/132683_adding_setting_for_servers_and_server_groups.html) called ```nStartAgentThreads``` with the values specified below, and click **Save**.
 
 | Setting | Value |
 | ------- | ----- |
@@ -171,9 +171,9 @@ Rule: Power State == ON
 | **Type:** | ```Integer``` |
 | **Value:** | ```100``` |
 13. Open **Commvault CommCell Console** and noativate to the Cloud library where your backups are stored, expand the libarry right-click **Mount-Path**.
-14. Select **Share Mount Path**
-15. Click the **Share** button and add each new Access Node with an _Access Mode_ of ```Read```
-16. Click **Save**
+ - Select **Share Mount Path**
+ - Click the **Share** button and add each new Access Node with an _Access Mode_ of ```Read```
+ - Click **Save**
 
 > [!NOTE]
 > You can use Amazon EC2 Spot Instances for your Cloud Access Nodes, but if the instance is reclaimed during the recovery, the restore will fail for any instance(s) being restored by the reclaimed instance. See the Cloudformation [```template.yml```](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/blob/main/cloudformation/100x%20Cloud%20Access%20Nodes%20(Spot%20Market)/template.yml) to deploy your Access Nodes from the Spot Market.
