@@ -146,6 +146,13 @@ Rule: Power State == ON
 | **Type:** | ```Integer``` |
 | **Value:** | ```100``` |
 12. Add a new entity-based additional setting called ```MaxRestoreStreams``` and set to ``100``.
+| Setting | Value |
+| ------- | ----- |
+| **Name:** | ```MaxRestoreStreams``` |
+| **Entity:** | Select your previously created server group |
+| **Category:** | ```VirtualServer``` |
+| **Type:** | ```Integer``` |
+| **Value:** | ```100``` |
 13. Open **Commvault CommCell Console** and noativate to the Cloud library where your backups are stored, expand the libarry right-click **Mount-Path**.
 14. Select **Share Mount Path**
 15. Click the **Share** button and add each new Access Node with an _Access Mode_ of ```Read```
