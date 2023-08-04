@@ -187,6 +187,7 @@ Rule: Power State == ON
 Simply [run a restore](https://documentation.commvault.com/2023e/essential/87257_restoring_full_amazon_ec2_instance_in_place.html) from **Commvault Commvault Center** 
 </details>
 <br>
+
 ## ⏩ Recovery results
 
 Commvault lab testing was performed using the following setup:
