@@ -36,9 +36,9 @@ This step deploys Commvault Backup & Recovery as a single Amazon EC2 instance ru
 1. Login to [AWS Console](https://aws.amazon.com/console/) as a user that can deploy new Amazon EC2, Amazon S3. and AWS IAM resources using Amazon CloudFormation.
 2. Open new browser tab to [AWS Marketplace](https://aws.amazon.com/marketplace) and search for ```Commvault```.
 3. Click [Commvault Backup & Recovery BYOL](https://aws.amazon.com/marketplace/pp/prodview-ecysdywnipxv6?sr=0-3&ref_=beagle&applicationId=AWSMPContessa).
-4. Select *CloudFormation Template* Fulfilment Option.
-5. Select the *I acknowledge that AWS CloudFormation might create IAM resources with custom names.* checkbox.
-6. Click *Submit* to deploy.
+4. Select **CloudFormation Template** Fulfilment Option and supply requested information.
+6. Select the **I acknowledge that AWS CloudFormation might create IAM resources with custom names.** checkbox.
+7. Click **Submit** to deploy.
 
 ## 🛠️ Setup - Step 2 - Review the created AWS IAM role and policies that allow Commavult to backup and recovery your AWS workloads.
 
@@ -50,43 +50,39 @@ Detailed information of the AWS IAM Policies required by Commvault (per AWS work
 
 ### Creating a Commvault admin account
 1. Obtain your ```Administrator``` password for your newly created ```Commvault Backup & Recovery``` instance.
-2. Login using Remote Desktop Protocol (RDP) - Commvault recommends using [Amazon EC2 Instance Connect](https://aws.amazon.com/about-aws/whats-new/2023/06/amazon-ec2-instance-connect-ssh-rdp-public-ip-address/) for secure access to your Commvault instance _without_ the need to expose public IP addresses, or manage __bastion hosts__.
-3. Wait for the ```******* Starting Commserve image customization ********``` powershell bootstrapper script to complete. This script runs only once, at first boot to configure the Commvault software and trial license.
+2. Login using Remote Desktop Protocol (RDP)
+3. Wait for the ```******* Starting Commserve image customization ********``` powershell first-boot configuration script to complete. 
+
+:bulb: **Tip**: Commvault recommends using [Amazon EC2 Instance Connect](https://aws.amazon.com/about-aws/whats-new/2023/06/amazon-ec2-instance-connect-ssh-rdp-public-ip-address/) for secure access to your Commvault instance _without_ the need to expose public IP addresses, or manage __bastion hosts__.
 
 💡 **Tip**: *Be patient*, remember that each of the Amazon EBS volumes on the host is being provisioned from Amazon EBS snapshots that are stored in Amazon S3.
 
-A browser will open when complete advanced, proceed to localhost (unsafe)
-[https://localhost/adminconsole](https://localhost/adminconsole)
+A browser will open to complete the remaining setup.
 
-4.	Provide the **Email address(( that will be associated with the Commvault ‘admin’ built-in account ([break glass account](https://docs.aws.amazon.com/whitepapers/latest/organizing-your-aws-environment/break-glass-access.html)).
-5.	Provide the **Password** that will be associated with the Commvault ‘admin’ built-in account.
-6.	Click **Create account** button
-7.	You will be greeted with Command Center login screen. Login with newly provide admin and password.
+4.	Provide the **Email address** that will be associated with the Commvault ```admin``` user ([break glass account](https://docs.aws.amazon.com/whitepapers/latest/organizing-your-aws-environment/break-glass-access.html)).
+5.	Provide the **Password** that will be associated with the Commvault ```admin``` user.
+6.	Click **Create account**.
+7.	You will be greeted with Command Center login screen. Login with newly created ```admin``` user and password.
 8.	Click **OK** to accept the License and Registration warning.
 
-:warning: Warning: If you are using a trial license the ```Cloud Storage``` license will be constrained to a maximum of ten (10) concurrent MediaAgents during the restore. If you have a paid Commvault license, you can [submit a request](https://ma.commvault.com/Support/ProductRegistration) to extend your ```Cloud Storage``` license to match your required parallism (i.e., the total number of MediaAGents you will have active in your Commvault environment).
+:warning: Warning: If you are using a trial license the ```Cloud Storage``` license will be constrained to a maximum of ten (10) concurrent MediaAgents during the restore. If you have a paid Commvault license, you can [submit a request](https://ma.commvault.com/Support/ProductRegistration) to extend your ```Cloud Storage``` license to match your required parallism (i.e., the total number of Access Nodes you will have active in your Commvault environment).
 
 ### Completing Commvault Core Setup
-1. Click Let’s get started
-2. Click Cloud in the Add storage page.
-3. Provide a Cloud library Name (i.e., Amazon S3-IA (us-east-1))
-4. Select Amazon S3 as the Cloud storage Type.
-5. Leave MediaAgent with the configured (default) MediaAgent (the CommServe).
-6. Set the Service host to s3.us-east-1.amazonaws.com (your Region may differ).
-7. Select IAM role for the Credentials
-8. Enter the bucket name created in your AWS CloudFormation deployment
+Next, you just need to tell Commvault how often you want to run backups, and where to store your backups (i.e., Amazon S3).
+
+1. Click **Let’s get started**.
+2. Click **Cloud** in the Add storage page.
+3. Provide a **Cloud library Name** (i.e., ```Amazon S3-IA - Backups us-east-1```).
+4. Select **Amazon S3** as the Cloud storage Type.
+5. Set the **Service host** to ```s3.us-east-1.amazonaws.com``` (your Region may differ).
+6. Select **IAM role** for the credentials.
+7. Enter the ```**bucket name**``` created during your AWS CloudFormation deployment.
 
 💡 Hint: You can find the bucket name in the AWS CloudFormation Console, in your stack, on the Outputs tab, as CvltCloudLibraryBucketName
 
-9. Select the Storage class, the default S3 Standard-Infrequent Access (S3 Standard-IA) is the recommended Storage Class for Backup data.
-10. Leave Use deduplication enabled.
-11. Enter the Deduplication DB location, use the volume pre-setup, pre-formatted with correct block-size (i.e., H:\)
-
-```Example: Enter H:\Amazon S3-IA – DDB```
-
-12. Click Save on the Create server backup plan page to accept defaults for server plans.
-
-⚠️ If you also have a role called ‘CommvaultBackupAndRecovery’ the stack will fail to deploy.
+9. Leave **Storage class**, as the default S3 Standard-Infrequent Access (S3 Standard-IA).
+10. Enter the **Deduplication DB location**, use the volume pre-setup, pre-formatted with correct block-size (i.e., ```H:\Amqzon-S3-IA-DDB```)
+11. Click **Save** to accept defaults for your server plan.
 
 ### (Optional) Upgrade Commvault Backup & Recovery to latest Maintenance Release
 1. Download the latest Full Install Image to the CommServe
