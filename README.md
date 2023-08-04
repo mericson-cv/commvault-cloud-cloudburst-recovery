@@ -21,9 +21,11 @@ At a high-level the process for setup and execution this solution (depicted abov
 4. Deploy 100 x [Commvault Cloud Access Node ARM BYOL](https://aws.amazon.com/marketplace/pp/prodview-usqf7gn3ipqke?sr=0-2&ref_=beagle&applicationId=AWSMPContessa) with [CloudFormation template](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/tree/main/cloudformation) and configure.
 5. Run a massively parallel restore.
 
-:bulb: Tip: There are HashiCorp Terraform examples in the [terraform folder](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/tree/main/terraform) to quickly deploy on-demand or [Amazon EC2 Spot Instances](https://aws.amazon.com/ec2/spot/), complete with _random data_ generation on first boot. 
+> [!NOTE]
+> There are HashiCorp Terraform examples in the [terraform folder](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/tree/main/terraform) to quickly deploy on-demand or [Amazon EC2 Spot Instances](https://aws.amazon.com/ec2/spot/), complete with _random data_ generation on first boot. 
 
-_100 instances are used only as an example to demonstrate the massively parallel nature of __Commvault Backup & Recovery__, Amazon S3, and Amazon EC2 compute. Commvault recommends performing regular testing and [GameDays](https://aws.amazon.com/gameday/) in your IT, Security, and Application teams to find the right mix of recovery speed (throughput) and overall recovery cost_. 
+> [!NOTE]
+> _100 instances are used only as an example to demonstrate the massively parallel nature of __Commvault Backup & Recovery__, Amazon S3, and Amazon EC2 compute. Commvault recommends performing regular testing and [GameDays](https://aws.amazon.com/gameday/) in your IT, Security, and Application teams to find the right mix of recovery speed (throughput) and overall recovery cost_. 
 
 The key **benefit** of this solution is that the recovery resources are __ephemeral__ and may be destroyed immediately after the restore is complete.
 
@@ -53,9 +55,11 @@ Detailed information of the AWS IAM Policies required by Commvault (per AWS work
 2. Login using Remote Desktop Protocol (RDP)
 3. Wait for the ```******* Starting Commserve image customization ********``` powershell first-boot configuration script to complete. 
 
-:bulb: **Tip**: Commvault recommends using [Amazon EC2 Instance Connect](https://aws.amazon.com/about-aws/whats-new/2023/06/amazon-ec2-instance-connect-ssh-rdp-public-ip-address/) for secure access to your Commvault instance _without_ the need to expose public IP addresses, or manage __bastion hosts__.
+> [!NOTE]
+> Commvault recommends using [Amazon EC2 Instance Connect](https://aws.amazon.com/about-aws/whats-new/2023/06/amazon-ec2-instance-connect-ssh-rdp-public-ip-address/) for secure access to your Commvault instance _without_ the need to expose public IP addresses, or manage __bastion hosts__.
 
-💡 **Tip**: *Be patient*, remember that each of the Amazon EBS volumes on the host is being provisioned from Amazon EBS snapshots that are stored in Amazon S3.
+> [!IMPORTANT]
+> *Be patient*, remember that each of the Amazon EBS volumes on the host is being provisioned from Amazon EBS snapshots that are stored in Amazon S3.
 
 A browser will open to complete the remaining setup.
 
@@ -65,7 +69,8 @@ A browser will open to complete the remaining setup.
 7.	You will be greeted with Command Center login screen. Login with newly created ```admin``` user and password.
 8.	Click **OK** to accept the License and Registration warning.
 
-:warning: Warning: If you are using a trial license the ```Cloud Storage``` license will be constrained to a maximum of ten (10) concurrent MediaAgents during the restore. If you have a paid Commvault license, you can [submit a request](https://ma.commvault.com/Support/ProductRegistration) to extend your ```Cloud Storage``` license to match your required parallism (i.e., the total number of Access Nodes you will have active in your Commvault environment).
+> [!WARNING]
+> If you are using a trial license the ```Cloud Storage``` license will be constrained to a maximum of ten (10) concurrent MediaAgents during the restore. If you have a paid Commvault license, you can [submit a request](https://ma.commvault.com/Support/ProductRegistration) to extend your ```Cloud Storage``` license to match your required parallism (i.e., the total number of Access Nodes you will have active in your Commvault environment).
 
 ### Completing Commvault Core Setup
 Next, you just need to tell Commvault how often you want to run backups, and where to store your backups (i.e., Amazon S3).
@@ -78,7 +83,8 @@ Next, you just need to tell Commvault how often you want to run backups, and whe
 6. Select **IAM role** for the credentials.
 7. Enter the ```**bucket name**``` created during your AWS CloudFormation deployment.
 
-💡 Hint: You can find the bucket name in the AWS CloudFormation Console, in your stack, on the Outputs tab, as CvltCloudLibraryBucketName
+> [!NOTE]
+> You can find the bucket name in the AWS CloudFormation Console, in your stack, on the Outputs tab, as CvltCloudLibraryBucketName
 
 9. Leave **Storage class**, as the default S3 Standard-Infrequent Access (S3 Standard-IA).
 10. Enter the **Deduplication DB location**, use the volume pre-setup, pre-formatted with correct block-size (i.e., ```H:\Amqzon-S3-IA-DDB```)
@@ -142,7 +148,8 @@ Rule: Power State == ON
 15. Click the **Share** button and add each new Access Node with an _Access Mode_ of ```Read```
 16. Click **Save**
 
-:bulb: **Tip**: You can use Amazon EC2 Spot Instances for your Cloud Access Nodes, but if the instance is reclaimed during the recovery, the restore will fail for any instance(s) being restored by the reclaimed instance. See the Cloudformation [```template.yml```](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/blob/main/cloudformation/100x%20Cloud%20Access%20Nodes%20(Spot%20Market)/template.yml) to deploy your Access Nodes from the Spot Market.
+> [!NOTE}
+> You can use Amazon EC2 Spot Instances for your Cloud Access Nodes, but if the instance is reclaimed during the recovery, the restore will fail for any instance(s) being restored by the reclaimed instance. See the Cloudformation [```template.yml```](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/blob/main/cloudformation/100x%20Cloud%20Access%20Nodes%20(Spot%20Market)/template.yml) to deploy your Access Nodes from the Spot Market.
 
 ## 🏃Run - Step 5 - Run a restore
 
