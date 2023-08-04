@@ -94,11 +94,30 @@ You will need an initial backup of your protected workloads before you can run a
 1. Type **```/add hypervisor```
 
 ## 🛠️ Setup - Step 4 - Deploy 100 x Cloud Access Nodes and configure
-OK, it's time to setup your set of parallel **Cloud Access Nodes**, Commvault uses the Cloud Access Node to perform backup, replication, restores. You can acclerate recovery time by increasing the number of Access Nodes used, allowing more parallel recovery activities to run at the same time. Not only does this increase business agility, it also saves cost as you are only paying for what you use (_during the restore_).
+OK, it's time to setup your set of parallel **Cloud Access Nodes**, Commvault uses Cloud Access Nodes to perform backup, replication, restores. Commvault recommends [AWS Graviton](https://aws.amazon.com/ec2/graviton/) based Access Nodes for best price-performance and so you can meet your [Shared Sustainabiltiy Responsibility](https://docs.aws.amazon.com/wellarchitected/latest/sustainability-pillar/the-shared-responsibility-model.html) in AWS. 
+
+You can acclerate recovery time by increasing the number of Access Nodes used, allowing more parallel recovery activities to run at the same time. Not only does this increase business agility, it also saves cost as you are only paying for what you use (_during the restore_).
 
 1. Navigate to **Manage > CommCell** and enable **Requires authcode for installation** toggle.
 2. Click the **authcode** and save it somewhere safe, you will need it next.
-3. Download the 100 x Amazon EC2 Cloud Access Nodes ```[template.yml](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/tree/main/cloudformation/100x%20Cloud%20Access%20Nodes)``` and update to match your environment.
+3. Download the 100 x Amazon EC2 Cloud Access Nodes [```template.yml```](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/tree/main/cloudformation/100x%20Cloud%20Access%20Nodes) and update to match your environment. You will find instructions at the top of the template for performing updates
+
+```
+#
+# INSTRUCTIONS: 
+# - Ensure AWS Account where instances are deployed has an AWS IAM role called 'CommvaultBackupAndRecovery' (this role is created during deployment of the 'Commvault Backup & Recovery BYOL' product in AWS Marketplace).
+# - Update all occurrences of the KeyName parameter to a Key pair Name in your AWS account.
+# - Update all occurrences of the SubnetId parameter with the Subnet ID that your 'Commvault Backup & Recovery' instance resides within - this allows use of Commvault HotAdd recovery
+# - Update all occurrences of the GroupSet parameter with a Security group ID that allows incoming TCP (8400, 8403) and ICMP (PING) from the 'Commbvault Backup & Recovery' instance.
+# - Optionally update the ImageId, InstanceType
+# 
+# INSTRUCTIONS to auto-register instances with your Commvault Backup & Recovery instance
+# - Replace all occurrences of the -CSHost parameter (see UserData section) to include the IPv4 address of your 'Commvault Backup & Recovery' instance.
+# - Replace all occurrences of the -CSName parameter (see UserData section) to match the fully-qualified hostname returned by `nslookup <YOUR-CS-HOST>` (or your CommServe friendly name as shown in Commvault Command Center home screen).
+# - Obtain the authcode for your CommServe and replace all occurrences of -authcode parameter (see UserData section).
+#
+```
+4. Create a new AWS CloudFormation Stack and supply your updated ```template.yml``` then **Deploy**.
 
 ## 🏃Run - Step 5 - Run a restore
 
