@@ -34,6 +34,7 @@ The key **benefit** of this solution is that the recovery resources are __epheme
 <details>
 <summary>🛠️ Setup - Step 1 - Deploy Commvault Backup & Recovery from the AWS Marketplace</summary>
 
+
 This step deploys Commvault Backup & Recovery as a single Amazon EC2 instance running Microsoft Windows. If you already have a Commvault Backup & Recovery deployment, you may skip this step.
 
 1. Login to [AWS Console](https://aws.amazon.com/console/) as a user that can deploy new Amazon EC2, Amazon S3. and AWS IAM resources using Amazon CloudFormation.
@@ -43,19 +44,23 @@ This step deploys Commvault Backup & Recovery as a single Amazon EC2 instance ru
 6. Select the **I acknowledge that AWS CloudFormation might create IAM resources with custom names.** checkbox.
 7. Click **Submit** to deploy.
 
+
 </details>
 
 <details>
 <summary>🛠️ Setup - Step 2 - Review the created AWS IAM role and policies that allow Commavult to backup and recovery your AWS workloads.</summary>
 
+
 Commvault will create a single AWS IAM Role called `CommvaultBackupAndRecovery`.
 
 Detailed information of the AWS IAM Policies required by Commvault (per AWS workload) may be viewed [here](https://documentation.commvault.com/2023e/essential/101442_requirements_and_usage_for_aws_iam_policies_and_permissions.html#iam-policies).
+
 
 </details>
 
 <details>
 <summary>🛠️ Setup - Step 3 - Complete the Core Setup Wizard and run a backup.</summary>
+
 
 ### Creating a Commvault admin account
 1. Obtain your ```Administrator``` password for your newly created ```Commvault Backup & Recovery``` instance.
