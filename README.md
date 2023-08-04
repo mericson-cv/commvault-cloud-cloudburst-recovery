@@ -84,17 +84,7 @@ Next, you just need to tell Commvault how often you want to run backups, and whe
 10. Enter the **Deduplication DB location**, use the volume pre-setup, pre-formatted with correct block-size (i.e., ```H:\Amqzon-S3-IA-DDB```)
 11. Click **Save** to accept defaults for your server plan.
 
-### (Optional) Upgrade Commvault Backup & Recovery to latest Maintenance Release
-1. Download the latest Full Install Image to the CommServe
-2. Execute Setup.exe as Administrator
-3. Select I Agree checkbox, click Next button
-4. Select Install packages on this computer, click Next button
-5. Select Upgrade Feature Release, click Next button
-6. Select Perform Full Database Maintenance, click Next button, click Next button (again)
-7. The machine needs to be restarted, click Reboot Now
-8. Login again
-9. Install will start automatically
-10. Select Resume install, click Next button
+Consider [upgrading your Commvault software](https://documentation.commvault.com/2023e/essential/120686_downloading_software_on_demand.html) to the latest Maintenance Release before moving to the next step.
 
 ## ⏩ Recovery results
 
