@@ -21,6 +21,15 @@ At a high-level the process for setup and execution this solution (depicted abov
 4. Deploy 100 x [Commvault Cloud Access Node ARM BYOL](https://aws.amazon.com/marketplace/pp/prodview-usqf7gn3ipqke?sr=0-2&ref_=beagle&applicationId=AWSMPContessa) with [CloudFormation template](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/tree/main/cloudformation) and configure.
 5. Run a massively parallel restore.
 
+> [!NOTE]  
+> Highlights information that users should take into account, even when skimming.
+
+> [!IMPORTANT]  
+> Crucial information necessary for users to succeed.
+
+> [!WARNING]  
+> Critical content demanding immediate user attention due to potential risks.
+
 > [!NOTE]
 > There are HashiCorp Terraform examples in the [terraform folder](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/tree/main/terraform) to quickly deploy on-demand or [Amazon EC2 Spot Instances](https://aws.amazon.com/ec2/spot/), complete with _random data_ generation on first boot. 
 
