@@ -117,8 +117,8 @@ You will need an initial backup of your protected workloads before you can run a
 <details>
 
 <summary>🛠️ Setup - Step 4 - Deploy 100 x Cloud Access Nodes and configure</summary>
-<br>
-OK, it's time to setup your set of parallel **Cloud Access Nodes**, Commvault uses Cloud Access Nodes to perform backup, replication, restores. Commvault recommends [AWS Graviton](https://aws.amazon.com/ec2/graviton/) based Access Nodes for best price-performance and so you can meet your [Shared Sustainabiltiy Responsibility](https://docs.aws.amazon.com/wellarchitected/latest/sustainability-pillar/the-shared-responsibility-model.html) in AWS. 
+
+OK, it's time to setup your set of parallel Cloud Access Nodes, Commvault uses Cloud Access Nodes to perform backup, replication, restores. Commvault recommends [AWS Graviton](https://aws.amazon.com/ec2/graviton/) based Access Nodes for best price-performance and so you can meet your [Shared Sustainabiltiy Responsibility](https://docs.aws.amazon.com/wellarchitected/latest/sustainability-pillar/the-shared-responsibility-model.html) in AWS. 
 
 You can acclerate recovery time by increasing the number of Access Nodes used, allowing more parallel recovery activities to run at the same time. Not only does this increase business agility, it also saves cost as you are only paying for what you use (_during the restore_).
 
