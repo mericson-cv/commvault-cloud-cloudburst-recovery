@@ -42,7 +42,8 @@ This step deploys Commvault Backup & Recovery as a single Amazon EC2 instance ru
   4. Select **CloudFormation Template** Fulfilment Option and supply requested information.
   5. Select the **I acknowledge that AWS CloudFormation might create IAM resources with custom names.** checkbox.
   6. Click **Submit** to deploy.
-  
+
+<br>  
 </details>
 
 <details>
@@ -102,6 +103,7 @@ Consider [upgrading your Commvault software](https://documentation.commvault.com
 
 ### Deploying some test Amazon EC2 instances
 If you are simply testing this solution, navigate to the [terraform](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/blob/main/terraform/100-amazon-ec2-instances%20(10GB%20random%20data)/main.tf) file where you can find an example to deploy one hundred (100) on-demand Amazon EC2 test hosts.
+<br>
 <br>
 
 ### Run an initial backup
