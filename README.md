@@ -35,7 +35,8 @@ The key **benefit** of this solution is that the recovery resources are __epheme
 <summary>🛠️ Setup - Step 1 - Deploy Commvault Backup & Recovery from the AWS Marketplace</summary>
 
 <br>
-This step deploys Commvault Backup & Recovery as a single Amazon EC2 instance running Microsoft Windows. If you already have a Commvault Backup & Recovery deployment, you may skip this step.<br>
+This step deploys Commvault Backup & Recovery as a single Amazon EC2 instance running Microsoft Windows. If you already have a Commvault Backup & Recovery deployment, you may skip this step.
+<br>
 
 1. Login to [AWS Console](https://aws.amazon.com/console/) as a user that can deploy new Amazon EC2, Amazon S3. and AWS IAM resources using Amazon CloudFormation.
 2. Open new browser tab to [AWS Marketplace](https://aws.amazon.com/marketplace) and search for ```Commvault```.
