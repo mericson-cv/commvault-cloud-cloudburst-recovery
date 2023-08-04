@@ -129,13 +129,18 @@ Rule: Package Installed == Virtual Server
 Rule: OS Version contains 'Amazon Linux'
 Rule: Power State == ON
 ```
-9. Navigate to your previously configured [Amazon EC2 group](https://documentation.commvault.com/2023e/essential/159097_updating_amazon_ec2_vm_group.html) and add your **group** for the access nodes
-10. Add a new entity-based additional setting called ```nStartAgentThreads``` and set to ```100```.
-11. Add a new entity-based additional setting called ```MaxRestoreStreams``` and set to ``100``.
-12. Open **Commvault CommCell Console** and noativate to the Cloud library where your backups are stored, expand the libarry right-click **Mount-Path**.
-13. Select **Share Mount Path**
-14. Click the **Share** button and add each new Access Node with an _Access Mode_ of ```Read```
-15. Click **Save**
+9. Navigate to your previously configured [Amazon EC2 group](https://documentation.commvault.com/2023e/essential/159097_updating_amazon_ec2_vm_group.html) and add your **group** for the access nodes.
+10. Add a new [entity setting](https://documentation.commvault.com/2023e/essential/132683_adding_setting_for_servers_and_server_groups.html) called ```nStartAgentThreads``` with the values specified below, and click **Save**.
+   - **Name:** ``nStartAgentThreads```
+   - **Entity:** Select your previously created server group (step 5 above).
+   - **Category:** ```VirtualServer```
+   - **Type:** ```Integer```
+   - **Value:** ``100```
+12. Add a new entity-based additional setting called ```MaxRestoreStreams``` and set to ``100``.
+13. Open **Commvault CommCell Console** and noativate to the Cloud library where your backups are stored, expand the libarry right-click **Mount-Path**.
+14. Select **Share Mount Path**
+15. Click the **Share** button and add each new Access Node with an _Access Mode_ of ```Read```
+16. Click **Save**
 
 :bulb: **Tip**: You can use Amazon EC2 Spot Instances for your Cloud Access Nodes, but if the instance is reclaimed during the recovery, the restore will fail for any instance(s) being restored by the reclaimed instance. See the Cloudformation [```template.yml```](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/blob/main/cloudformation/100x%20Cloud%20Access%20Nodes%20(Spot%20Market)/template.yml) to deploy your Access Nodes from the Spot Market.
 
