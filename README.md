@@ -164,7 +164,7 @@ Rule: Power State == ON
 
 ## 🏃Run - Step 5 - Run a restore
 
-Simply run a restore from **Commvault Commvault Center** 
+Simply [run a restore](https://documentation.commvault.com/2023e/essential/87257_restoring_full_amazon_ec2_instance_in_place.html) from **Commvault Commvault Center** 
 
 ## ⏩ Recovery results
 
