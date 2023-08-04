@@ -117,7 +117,7 @@ You can acclerate recovery time by increasing the number of Access Nodes used, a
 # - Obtain the authcode for your CommServe and replace all occurrences of -authcode parameter (see UserData section).
 #
 ```
-4. Create a new AWS CloudFormation Stack and supply your updated ```template.yml``` then **Deploy**.
+4. Create and launch a new AWS CloudFormation Stack with your customized ```template.yml``` using either the [console](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-using-console.html) or the [AWS CLI](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-using-cli.html).
 
 ## 🏃Run - Step 5 - Run a restore
 
