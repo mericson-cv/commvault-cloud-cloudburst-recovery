@@ -34,7 +34,7 @@ The key **benefit** of this solution is that the recovery resources are __epheme
 <details>
 <summary>🛠️ Setup - Step 1 - Deploy Commvault Backup & Recovery from the AWS Marketplace</summary>
 
-
+<br>
 This step deploys Commvault Backup & Recovery as a single Amazon EC2 instance running Microsoft Windows. If you already have a Commvault Backup & Recovery deployment, you may skip this step.
 
 1. Login to [AWS Console](https://aws.amazon.com/console/) as a user that can deploy new Amazon EC2, Amazon S3. and AWS IAM resources using Amazon CloudFormation.
@@ -43,25 +43,23 @@ This step deploys Commvault Backup & Recovery as a single Amazon EC2 instance ru
 4. Select **CloudFormation Template** Fulfilment Option and supply requested information.
 6. Select the **I acknowledge that AWS CloudFormation might create IAM resources with custom names.** checkbox.
 7. Click **Submit** to deploy.
-
-
+<br>
 </details>
 
 <details>
 <summary>🛠️ Setup - Step 2 - Review the created AWS IAM role and policies that allow Commavult to backup and recovery your AWS workloads.</summary>
-
-
+<br>
 Commvault will create a single AWS IAM Role called `CommvaultBackupAndRecovery`.
 
 Detailed information of the AWS IAM Policies required by Commvault (per AWS workload) may be viewed [here](https://documentation.commvault.com/2023e/essential/101442_requirements_and_usage_for_aws_iam_policies_and_permissions.html#iam-policies).
 
-
+<br>
 </details>
 
 <details>
 <summary>🛠️ Setup - Step 3 - Complete the Core Setup Wizard and run a backup.</summary>
 
-
+<br>
 ### Creating a Commvault admin account
 1. Obtain your ```Administrator``` password for your newly created ```Commvault Backup & Recovery``` instance.
 2. Login using Remote Desktop Protocol (RDP)
@@ -112,11 +110,13 @@ You will need an initial backup of your protected workloads before you can run a
 1. [Add your AWS account](https://documentation.commvault.com/2023e/essential/121660_configuring_backups_for_amazon_ec2_instances.html#add-hypervisor) to Commvault Backup & Recovery.
 2. Create an [Amazon EC2 group](https://documentation.commvault.com/2023e/essential/121660_configuring_backups_for_amazon_ec2_instances.html#add-vm-group) to auto-discover EC2 instances and protect them.
 3. Run a **[backup](https://documentation.commvault.com/2023e/essential/121676_backing_up_amazon_ec2_instances_on_demand.html)**
+<br>
 </details>
 
 <details>
 
 <summary>🛠️ Setup - Step 4 - Deploy 100 x Cloud Access Nodes and configure</summary>
+<br>
 OK, it's time to setup your set of parallel **Cloud Access Nodes**, Commvault uses Cloud Access Nodes to perform backup, replication, restores. Commvault recommends [AWS Graviton](https://aws.amazon.com/ec2/graviton/) based Access Nodes for best price-performance and so you can meet your [Shared Sustainabiltiy Responsibility](https://docs.aws.amazon.com/wellarchitected/latest/sustainability-pillar/the-shared-responsibility-model.html) in AWS. 
 
 You can acclerate recovery time by increasing the number of Access Nodes used, allowing more parallel recovery activities to run at the same time. Not only does this increase business agility, it also saves cost as you are only paying for what you use (_during the restore_).
@@ -176,15 +176,16 @@ Rule: Power State == ON
 
 > [!NOTE]
 > You can use Amazon EC2 Spot Instances for your Cloud Access Nodes, but if the instance is reclaimed during the recovery, the restore will fail for any instance(s) being restored by the reclaimed instance. See the Cloudformation [```template.yml```](https://github.com/mericson-cv/aws-massively-parallel-recovery-solution/blob/main/cloudformation/100x%20Cloud%20Access%20Nodes%20(Spot%20Market)/template.yml) to deploy your Access Nodes from the Spot Market.
+<br>
 </details>
 
 <details>
 
 <summary>🏃Run - Step 5 - Run a restore</summary>
-
+<br>
 Simply [run a restore](https://documentation.commvault.com/2023e/essential/87257_restoring_full_amazon_ec2_instance_in_place.html) from **Commvault Commvault Center** 
 </details>
-
+<br>
 ## ⏩ Recovery results
 
 Commvault lab testing was performed using the following setup:
