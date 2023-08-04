@@ -146,6 +146,7 @@ Rule: Power State == ON
 | **Type:** | ```Integer``` |
 | **Value:** | ```100``` |
 12. Add a new entity-based additional setting called ```MaxRestoreStreams``` and set to ``100``.
+
 | Setting | Value |
 | ------- | ----- |
 | **Name:** | ```MaxRestoreStreams``` |
