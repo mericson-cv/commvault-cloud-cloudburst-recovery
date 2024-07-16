@@ -1,4 +1,4 @@
-# Commvault Backup & Recovery - Massively Parallel Recovery Solution
+# Commvault Cloud - Cloudburst Recovery for AWS Solution
 
 Example Infrastructure as Code (IaC) solution using [AWS CloudFormation](https://aws.amazon.com/cloudformation/), [HashiCorp Terraform](https://www.terraform.io/) to deploy on-demand and  Amazon EC2 instances Spot to perform a massively parallel recovery using [Commvault Backup & Recovery](https://www.commvault.com/platform/products/backup-and-recovery).
 
